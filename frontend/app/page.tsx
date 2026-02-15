@@ -34,6 +34,7 @@ export default function Home() {
     const [loading, setLoading] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
     const [progress, setProgress] = useState(0);
+    const [inputUrl, setInputUrl] = useState("");
 
     useEffect(() => {
         if (!loading) return;
@@ -64,6 +65,29 @@ export default function Home() {
             return () => clearTimeout(timeout);
         }
     }, [progress, router]);
+
+    const submit = async () => {
+        console.log(inputUrl);
+        if (!inputUrl) return;
+        try {
+            const res = await fetch("http://127.0.0.1:8000/fetch", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url: inputUrl }),
+            });
+            const data = await res.json();
+            if (data.message && data.message.startsWith("Error")) {
+                // Handle error (show message, etc.)
+                alert(data.message);
+                return;
+            }
+            // Success: go to next page with data (example: /analyze?url=...)
+            localStorage.setItem("analysisResult", JSON.stringify(data));
+            handleAnalyze();
+        } catch (err) {
+            alert("Network or server error.");
+        }
+    };
 
     const handleAnalyze = () => {
         setLoading(true);
@@ -142,11 +166,13 @@ export default function Home() {
                     <div className="flex flex-row w-fit gap-4  mt-4 justify-center items-center w-full max-w-2xl rounded-xl p-4">
                         <input
                             type="text"
+                            value={inputUrl}
+                            onChange={e => setInputUrl(e.target.value)}
                             placeholder="Paste a URL..."
                             className="mt-2 w-200 h-14 rounded-lg bg-background px-4 py-3 text-base text-foreground outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border placeholder:text-text-warm focus:outline-blue-primary"
                         />
                         <button
-                            onClick={handleAnalyze}
+                            onClick={submit}
                             type="button"
                             className="mt-2 w-[50%] inline-flex items-center justify-center gap-2 rounded-lg bg-blue-primary px-2 py-3 font-heading text-xl font-medium leading-8 text-white cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
                         >
