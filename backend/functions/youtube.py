@@ -1,15 +1,14 @@
 import requests
-from typing import Dict, Any
+from typing import Dict, Any, List
 from urllib.parse import urlparse, parse_qs
 import os
 from dotenv import load_dotenv
+import re
 
 # Load .env file
 load_dotenv()
 
 # Access variables
-openai_key = os.getenv("OPENAI_API_KEY")
-db_url = os.getenv("DATABASE_URL")
 serp_api_key = os.getenv("SERP_API_KEY")
 
 
@@ -22,9 +21,9 @@ def transform_youtube_url(url: str):
 
     #get info from video api
     video_info = get_youtube_video_info(v_id, serp_api_key)
-    description = video_info.description.content
-    channel = video_info.channel.name
-    title = video_info.title
+    description = video_info["description"]["content"]
+    channel = video_info["channel"]["name"]
+    title = video_info["title"]
     sources = extract_non_youtube_links(video_info)
 
     data = {
@@ -109,11 +108,11 @@ def get_youtube_video_info(video_id: str, api_key: str) -> Dict[str, Any]:
     params = {
         "engine": "youtube_video",
         "v": video_id,
+        "type": "asr",
         "api_key": api_key
     }
     
     response = requests.get(url, params=params)
-    response.raise_for_status()
     
     return response.json()
 
@@ -132,10 +131,16 @@ def get_transcript_text(video_id: str, api_key: str, lang: str = "en") -> str:
     result = get_youtube_transcript(video_id, api_key, lang)
     
     # Extract transcript segments
-    transcript_segments = result.get("transcript", [])
+    transcript = result["transcript"]
+
+    transcript_segments = []
+    n = len(transcript)
+    for i in range(n):
+        transcript_segments.append(transcript[i]["snippet"])
+        
     
     # Combine all text segments
-    full_text = " ".join([segment.get("text", "") for segment in transcript_segments])
+    full_text = " ".join(transcript_segments)
     
     return full_text
 
@@ -158,14 +163,13 @@ def get_youtube_transcript(video_id: str, api_key: str, lang: str = "en") -> Dic
     url = "https://serpapi.com/search"
     
     params = {
-        "engine": "youtube_transcripts",
-        "video_id": video_id,
-        "lang": lang,
+        "engine": "youtube_video_transcript",
+        "v": video_id,
+        "type": "asr",
         "api_key": api_key
     }
     
     response = requests.get(url, params=params)
-    response.raise_for_status()
     
     return response.json()
 
@@ -180,16 +184,17 @@ def extract_non_youtube_links(video_api_response: Dict[str, Any]) -> List[str]:
         list: List of URLs that are not YouTube links
     """
     # Get description from the API response
-    description = video_api_response.get("description", "")
+    links = video_api_response["description"]["links"]
     
-    if not description:
+    if not links:
         return []
     
-    # Regex pattern to find URLs
-    url_pattern = r'https?://[^\s<>"{}|\\^`\[\]]+'
-    
     # Find all URLs in the description
-    all_urls = re.findall(url_pattern, description)
+    all_urls = []
+
+    n = len(links)
+    for i in range(n):
+        all_urls.append(links[i]["url"])
     
     # Filter out YouTube URLs
     non_youtube_urls = []
