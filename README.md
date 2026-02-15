@@ -1,12 +1,17 @@
-# **🔍Trace:_ Media Literacy Pipeline_**
+# **🔍Trace:Media Literacy Pipeline**
 
-Our project is a media‑literacy analysis tool that takes any URL — YouTube videos or online articles — and automatically breaks down who is speaking, what they’re saying, and what affiliations they have.
+A transparency tool for analyzing conflicts of interest in research, journalism, and public discourse.
+Our app takes any URL — a YouTube video, news article, blog post, or research piece — and automatically reveals the hidden context behind the message. For every speaker, author, publisher, or organization mentioned, we extract:
 
-- **Entities**  
-- **Opinions expressed by each entity**  
-- **Affiliations** (via SERP → Gemini → strict JSON validation)
+- Who they are
+- What they said
+- Who they’re affiliated with
+- Who funds them
+- What organizations or movements they’re connected to
 
-This system provides a structured, machine‑readable breakdown of *who is speaking*, *what they’re saying*, and *what affiliations they have*, forming the foundation for deeper media‑literacy analysis.
+The goal is simple: give people the context they need to understand whether they can trust the information they’re consuming.
+
+Instead of taking statements at face value, users get a structured breakdown of the entities behind the content and the influences that may shape their perspectives.
 
 ---
 
@@ -104,20 +109,6 @@ Returns:
 - Validates all JSON  
 - Returns the final combined result  
 
-Run it with:
-
-```
-cd backend
-python services/score.py
-```
-
-Or import it:
-
-```python
-from services.score import run_pipeline
-result = run_pipeline("https://www.youtube.com/watch?v=...")
-```
-
 ---
 
 ## **🧪 Example Output**
@@ -146,22 +137,85 @@ result = run_pipeline("https://www.youtube.com/watch?v=...")
 ```
 
 ---
+# **⚙️ Setup**
 
-## **⚙️ Setup**
+Follow these steps to run the full project locally.
 
-### **1. Install dependencies**
+---
+
+## **🖥️ Backend Setup (Python + FastAPI)**
+
+### **1. Navigate to the backend folder**
+
+```
+cd backend
+```
+
+### **2. Create and activate a virtual environment**
+
+**Windows:**
 
 ```
 python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+.venv\Scripts\activate
+```
+
+**Mac/Linux:**
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### **3. Install dependencies**
+
+```
 pip install -r requirements.txt
 ```
 
-### **2. Create `.env`**
+### **4. Create a `.env` file**
+
+Inside `backend/`, create a file named `.env`:
 
 ```
 GEMINI_API_KEY=your_key_here
 SERP_API_KEY=your_key_here
 ```
 
+## **🌐 Frontend Setup (React)**
+
+### **1. Navigate to the frontend folder**
+
+```
+cd frontend
+```
+
+### **2. Install dependencies**
+
+```
+npm install
+```
+
+### **3. Start the development server**
+
+```
+npm run dev
+```
+
+Frontend will be available at:
+
+```
+http://localhost:3000
+```
+
 ---
+
+## **🔗 Connecting Frontend → Backend**
+
+The frontend sends requests to:
+
+```
+http://localhost:8000/analyze?url=YOUR_URL
+```
+
+Make sure the backend is running before using the UI.
