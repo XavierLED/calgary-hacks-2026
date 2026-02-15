@@ -174,7 +174,8 @@ export default function Home() {
                         <button
                             onClick={submit}
                             type="button"
-                            className="mt-2 w-[50%] inline-flex items-center justify-center gap-2 rounded-lg bg-blue-primary px-2 py-3 font-heading text-xl font-medium leading-8 text-white cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+                            className="mt-2 w-[50%] inline-flex items-center justify-center gap-2 rounded-lg px-2 py-3 font-heading text-xl font-medium leading-8 text-white cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+                            style={{ backgroundColor: '#192BC2' }}
                         >
                             Start Analysis
                         </button>
