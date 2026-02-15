@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const features = [
     {
@@ -49,12 +50,12 @@ export default function Home() {
                         public discourse
                     </p>
 
-                    <button
-                        type="button"
+                    <Link
+                        href="/analyze"
                         className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-primary px-10 py-3 font-heading text-xl font-medium leading-8 text-white cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
                     >
                         Start Analysis
-                    </button>
+                    </Link>
                 </main>
 
                 <section className="mx-auto px-6 py-10 md:px-16">
