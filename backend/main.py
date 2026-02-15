@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from config.db import db
 import services.urls as dirr
@@ -9,6 +9,17 @@ import services.article as page
 
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Your React app URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 urls = db['urls']
 
 class URLRequest(BaseModel):
@@ -34,6 +45,10 @@ def fetch_url(req: URLRequest):
     #cache to database for future searches
     result["url"] = req.url  # Add the url to the result
     urls.insert_one(result)
+    
+    # Remove the _id that was added by insert_one
+    if "_id" in result:
+        del result["_id"]
 
     return result
 
