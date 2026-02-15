@@ -5,16 +5,34 @@ interface RiskBadgeProps {
 }
 
 const config = {
-    low: { label: "Low Risk", bg: "bg-emerald-100", text: "text-emerald-700", dot: "bg-emerald-500" },
-    moderate: { label: "Moderate Risk", bg: "bg-amber-100", text: "text-amber-700", dot: "bg-amber-500" },
-    high: { label: "High Risk", bg: "bg-red-100", text: "text-red-700", dot: "bg-red-500" },
+    low: {
+        label: "Low Risk",
+        text: "#3FC07C",
+        dot: "#26734A", 
+    },
+    moderate: {
+        label: "Moderate Risk",
+        text: "#E6C74C", 
+        dot: "#C9A61C",
+    },
+    high: {
+        label: "High Risk",
+        text: "#B91C1C",
+        dot: "#AE1F1E",
+    },
 };
 
 export function RiskBadge({ level }: RiskBadgeProps) {
     const c = config[level];
     return (
-        <span className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold ${c.bg} ${c.text}`}>
-            <span className={`h-2 w-2 rounded-full ${c.dot}`} />
+        <span
+            className="inline-flex items-center gap-2 py-1.5 text-sm font-semibold rounded-full"
+            style={{ color: c.text }}
+        >
+            <span
+                className="h-2 w-2 rounded-full"
+                style={{ backgroundColor: c.dot }}
+            />
             {c.label}
         </span>
     );

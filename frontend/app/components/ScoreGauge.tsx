@@ -13,9 +13,9 @@ export function ScoreGauge({ score, size = 220 }: ScoreGaugeProps) {
     const offset = circumference - (score / 100) * circumference;
 
     const getColor = () => {
-        if (score <= 33) return "#22c55e";
-        if (score <= 66) return "#eab308";
-        return "#ef4444";
+        if (score <= 33) return "#3FC07C";
+        if (score <= 66) return "#E6C74C";
+        return "#D92726";
     };
 
     return (
@@ -42,7 +42,7 @@ export function ScoreGauge({ score, size = 220 }: ScoreGaugeProps) {
                     transition={{ duration: 1.5, ease: "easeOut" }}
                 />
             </svg>
-            <div className="absolute inset-x-0 bottom-0 text-center">
+            <div className="absolute inset-x-0 bottom-4 text-center">
                 <motion.span
                     className="font-heading text-4xl font-bold text-foreground"
                     initial={{ opacity: 0 }}
@@ -51,7 +51,7 @@ export function ScoreGauge({ score, size = 220 }: ScoreGaugeProps) {
                 >
                     {score}
                 </motion.span>
-                <span className="text-sm text-text-warm">/100</span>
+                <span className="text-md text-text-warm">/100</span>
             </div>
         </div>
     );

@@ -23,7 +23,6 @@ import { Tag } from "../components/Tag";
 import { ConflictCard } from "../components/ConflictCard";
 import { DataSource } from "../components/DataSource";
 
-// ─── Data ──────────────────────────────────────────────────────────
 // TODO: Replace with real API call
 import { MOCK_RESULT } from "../lib/mockData";
 import type { AnalysisResult, ConflictSeverity, SourceType } from "../lib/types";
@@ -37,12 +36,12 @@ const SOURCE_LABELS: Record<SourceType, string> = {
     other: "Other Source",
 };
 
-const SOURCE_COLORS: Record<SourceType, string> = {
-    paper: "bg-light-red-accent text-red-accent",
-    video: "bg-light-orange-accent text-orange-accent",
-    news: "bg-light-orange-accent text-orange-accent",
-    article: "bg-light-orange-accent text-orange-accent",
-    other: "bg-light-blue-accent text-blue-accent",
+const SOURCE_COLORS: Record<SourceType, { bg: string; text: string }> = {
+    paper: { bg: 'var(--color-light-red-accent)', text: 'var(--color-red-accent)' },
+    video: { bg: 'var(--color-light-orange-accent)', text: 'var(--color-orange-accent)' },
+    news: { bg: 'var(--color-light-orange-accent)', text: 'var(--color-orange-accent)' },
+    article: { bg: 'var(--color-light-orange-accent)', text: 'var(--color-orange-accent)' },
+    other: { bg: 'var(--color-light-blue-accent)', text: 'var(--color-blue-accent)' },
 };
 
 const SEVERITY_COLORS: Record<ConflictSeverity, string> = {
@@ -57,10 +56,18 @@ const SEVERITY_BG: Record<ConflictSeverity, string> = {
     high: "bg-red-50 outline-red-200",
 };
 
-// ─── Component ─────────────────────────────────────────────────────
 export default function Results() {
     // TODO: Replace with real data fetching
     const data: AnalysisResult = MOCK_RESULT;
+
+    // Link risk level to score
+    const getRiskLevel = (score: number): "low" | "moderate" | "high" => {
+        if (score <= 33) return "low";
+        if (score <= 66) return "moderate";
+        return "high";
+    };
+
+    const riskLevel = getRiskLevel(data.score);
 
     return (
         <div className="relative min-h-screen bg-background">
@@ -100,16 +107,19 @@ export default function Results() {
                         >
                             {/* Source info */}
                             <span
-                                className={`mb-2 inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${SOURCE_COLORS[data.source.type]}`}
+                                className="px-2 py-1 inline-flex justify-center items-center gap-2.5 text-xs font-medium rounded-lg"
+                                style={{
+                                    backgroundColor: SOURCE_COLORS[data.source.type].bg,
+                                    color: SOURCE_COLORS[data.source.type].text,
+                                }}
                             >
                                 {SOURCE_LABELS[data.source.type]}
                             </span>
-                            <h2 className="font-heading text-xl font-bold leading-snug text-foreground">
+                            <h2 className="font-heading text-xl font-bold leading-snug text-foreground pt-2">
                                 {data.source.title}
                             </h2>
                             <p className="mt-2 text-sm text-text-warm">{data.source.authors.join(", ")}</p>
                             <div className="mt-1 flex items-center gap-2 text-xs text-text-warm">
-                                <Calendar className="h-3 w-3" />
                                 <span>{data.source.publisher} · {data.source.publishedDate}</span>
                             </div>
                             {data.source.url && (
@@ -129,7 +139,7 @@ export default function Results() {
                             </div>
 
                             <div className="mb-4 flex justify-center">
-                                <RiskBadge level={data.riskLevel} />
+                                <RiskBadge level={riskLevel} />
                             </div>
 
                             {/* Quick stats */}
