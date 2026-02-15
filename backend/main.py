@@ -6,6 +6,7 @@ from config.db import db
 import services.urls as dirr
 import services.youtube as ytube
 import services.article as page
+import services.research as res
 
 
 app = FastAPI()
@@ -39,6 +40,8 @@ def fetch_url(req: URLRequest):
         result = ytube.transform_youtube_url(req.url)
     elif typee == "article":
         result = page.extract_article_content(req.url)
+    elif typee == "research":
+        result = res.extract_paper_data(req.url)
     else:
         return {"message": "Error: That wasn't an article or youtube video"}
     
