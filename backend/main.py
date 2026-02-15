@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 
-from models.db import db
+from config.db import db
 import services.urls as dirr
 import services.youtube as ytube
 import services.article as page
