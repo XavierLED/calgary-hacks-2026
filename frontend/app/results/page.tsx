@@ -28,12 +28,21 @@ import { DataSource } from "../components/DataSource";
 import { MOCK_RESULT } from "../lib/mockData";
 import type { AnalysisResult, ConflictSeverity, SourceType } from "../lib/types";
 
+
 const SOURCE_LABELS: Record<SourceType, string> = {
-    paper: "Research Paper",
-    video: "Video",
-    news: "News Article",
-    article: "Article",
-    other: "Source",
+    paper: "Academic/Research",
+    video: "Media/Video",
+    news: "Media/News",
+    article: "Media/News",
+    other: "Other Source",
+};
+
+const SOURCE_COLORS: Record<SourceType, string> = {
+    paper: "bg-light-red-accent text-red-accent",
+    video: "bg-light-orange-accent text-orange-accent",
+    news: "bg-light-orange-accent text-orange-accent",
+    article: "bg-light-orange-accent text-orange-accent",
+    other: "bg-light-blue-accent text-blue-accent",
 };
 
 const SEVERITY_COLORS: Record<ConflictSeverity, string> = {
@@ -57,7 +66,7 @@ export default function Results() {
         <div className="relative min-h-screen bg-background">
 
 
-            <div className="relative z-10 mx-auto max-w-7xl px-6 py-8 md:px-12">
+            <div className="relative z-10 mx-auto max-w-7xl px-8 py-4 md:px-4 md:pt-12">
                 {/* Header */}
                 <div className="mb-8 flex items-center justify-between">
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
@@ -90,7 +99,9 @@ export default function Results() {
                             transition={{ duration: 0.5 }}
                         >
                             {/* Source info */}
-                            <span className="mb-2 inline-block rounded-full bg-blue-100 px-3 py-0.5 text-xs font-semibold text-blue-700">
+                            <span
+                                className={`mb-2 inline-block rounded-full px-3 py-0.5 text-xs font-semibold ${SOURCE_COLORS[data.source.type]}`}
+                            >
                                 {SOURCE_LABELS[data.source.type]}
                             </span>
                             <h2 className="font-heading text-xl font-bold leading-snug text-foreground">
