@@ -210,7 +210,7 @@ export default function Home() {
 
                 <footer className="px-6 py-8 text-center md:px-16">
                     <p className="mx-auto max-w-3xl text-xs leading-relaxed text-text-warm">
-                        This tool surfaces publicly available information about funding
+                        This tool utilizes publicly available information about funding
                         sources, institutional affiliations, and political connections. For
                         informational purposes only. Please verify independently before
                         making decisions.

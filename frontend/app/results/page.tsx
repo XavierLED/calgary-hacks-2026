@@ -23,17 +23,25 @@ import { Tag } from "../components/Tag";
 import { ConflictCard } from "../components/ConflictCard";
 import { DataSource } from "../components/DataSource";
 
-// ─── Data ──────────────────────────────────────────────────────────
 // TODO: Replace with real API call
 import { MOCK_RESULT } from "../lib/mockData";
 import type { AnalysisResult, ConflictSeverity, SourceType } from "../lib/types";
 
+
 const SOURCE_LABELS: Record<SourceType, string> = {
-    paper: "Research Paper",
-    video: "Video",
-    news: "News Article",
-    article: "Article",
-    other: "Source",
+    paper: "Academic/Research",
+    video: "Media/Video",
+    news: "Media/News",
+    article: "Media/News",
+    other: "Other Source",
+};
+
+const SOURCE_COLORS: Record<SourceType, { bg: string; text: string }> = {
+    paper: { bg: 'var(--color-light-red-accent)', text: 'var(--color-red-accent)' },
+    video: { bg: 'var(--color-light-orange-accent)', text: 'var(--color-orange-accent)' },
+    news: { bg: 'var(--color-light-orange-accent)', text: 'var(--color-orange-accent)' },
+    article: { bg: 'var(--color-light-orange-accent)', text: 'var(--color-orange-accent)' },
+    other: { bg: 'var(--color-light-blue-accent)', text: 'var(--color-blue-accent)' },
 };
 
 const SEVERITY_COLORS: Record<ConflictSeverity, string> = {
@@ -48,16 +56,24 @@ const SEVERITY_BG: Record<ConflictSeverity, string> = {
     high: "bg-red-50 outline-red-200",
 };
 
-// ─── Component ─────────────────────────────────────────────────────
 export default function Results() {
     // TODO: Replace with real data fetching
     const data: AnalysisResult = MOCK_RESULT;
+
+    // Link risk level to score
+    const getRiskLevel = (score: number): "low" | "moderate" | "high" => {
+        if (score <= 33) return "low";
+        if (score <= 66) return "moderate";
+        return "high";
+    };
+
+    const riskLevel = getRiskLevel(data.score);
 
     return (
         <div className="relative min-h-screen bg-background">
 
 
-            <div className="relative z-10 mx-auto max-w-7xl px-6 py-8 md:px-12">
+            <div className="relative z-10 mx-auto max-w-7xl px-8 py-4 md:px-4 md:pt-12">
                 {/* Header */}
                 <div className="mb-8 flex items-center justify-between">
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
@@ -84,21 +100,27 @@ export default function Results() {
                     {/* ── Left sidebar ── */}
                     <div className="space-y-6">
                         <motion.div
-                            className="rounded-xl bg-white p-8 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border"
+                            className="rounded-xl bg-white p-8 outline outline-[0.4px] -outline-offset-[0.4px]"
+                            style={{ outlineColor: 'var(--color-gray-border)' }}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5 }}
                         >
                             {/* Source info */}
-                            <span className="mb-2 inline-block rounded-full bg-blue-100 px-3 py-0.5 text-xs font-semibold text-blue-700">
+                            <span
+                                className="px-2 py-1 inline-flex justify-center items-center gap-2.5 text-xs font-medium rounded-lg"
+                                style={{
+                                    backgroundColor: SOURCE_COLORS[data.source.type].bg,
+                                    color: SOURCE_COLORS[data.source.type].text,
+                                }}
+                            >
                                 {SOURCE_LABELS[data.source.type]}
                             </span>
-                            <h2 className="font-heading text-xl font-bold leading-snug text-foreground">
+                            <h2 className="font-heading text-xl font-bold leading-snug text-foreground pt-2">
                                 {data.source.title}
                             </h2>
                             <p className="mt-2 text-sm text-text-warm">{data.source.authors.join(", ")}</p>
                             <div className="mt-1 flex items-center gap-2 text-xs text-text-warm">
-                                <Calendar className="h-3 w-3" />
                                 <span>{data.source.publisher} · {data.source.publishedDate}</span>
                             </div>
                             {data.source.url && (
@@ -118,7 +140,7 @@ export default function Results() {
                             </div>
 
                             <div className="mb-4 flex justify-center">
-                                <RiskBadge level={data.riskLevel} />
+                                <RiskBadge level={riskLevel} />
                             </div>
 
                             {/* Quick stats */}
@@ -137,24 +159,6 @@ export default function Results() {
                                 </div>
                             </div>
                         </motion.div>
-
-                        {/* Transparency disclaimer */}
-                        <motion.div
-                            className="rounded-lg bg-amber-50 p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-amber-300"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                        >
-                            <div className="flex gap-3">
-                                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-amber-900">Transparency Note</p>
-                                    <p className="mt-1 text-xs text-amber-800">
-                                        This analysis uses publicly available data and AI inference. Always verify independently before drawing conclusions.
-                                    </p>
-                                </div>
-                            </div>
-                        </motion.div>
                     </div>
 
                     {/* ── Right panel ── */}
@@ -163,7 +167,7 @@ export default function Results() {
                         <ConflictCard title="Entities & Affiliations" icon={<Users className="h-6 w-6" />} borderColor="border-l-cyan-500" defaultExpanded>
                             <div className="space-y-4">
                                 {data.entities.map((e, i) => (
-                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-colors hover:outline-blue-primary/50">
+                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] transition-colors hover:outline-blue-primary/50" style={{ outlineColor: 'var(--color-gray-border)' }}>
                                         <div className="mb-2 flex items-start justify-between">
                                             <div>
                                                 <h4 className="font-semibold text-foreground">{e.name}</h4>
@@ -182,9 +186,6 @@ export default function Results() {
                                                 ))}
                                             </div>
                                         )}
-                                        <div className="mt-3 text-xs">
-                                            <DataSource name={e.verified ? "Public records" : "AI-inferred"} verified={e.verified} />
-                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -194,7 +195,7 @@ export default function Results() {
                         <ConflictCard title="Funding & Sponsorship" icon={<DollarSign className="h-6 w-6" />} borderColor="border-l-blue-500" defaultExpanded>
                             <div className="space-y-4">
                                 {data.funding.map((f, i) => (
-                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-colors hover:outline-blue-primary/50">
+                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] transition-colors hover:outline-blue-primary/50" style={{ outlineColor: 'var(--color-gray-border)' }}>
                                         <div className="mb-2 flex items-start justify-between">
                                             <div>
                                                 <div className="mb-1 flex items-center gap-2">
@@ -211,7 +212,7 @@ export default function Results() {
                                         </div>
                                         {f.conflictNote && (
                                             <div className="mt-3 rounded-md bg-amber-50 p-2.5 text-xs text-amber-800">
-                                                ⚠️ {f.conflictNote}
+                                                 {f.conflictNote}
                                             </div>
                                         )}
                                         <div className="mt-3 flex items-center gap-4 text-xs">
@@ -262,7 +263,7 @@ export default function Results() {
                             <div className="space-y-6">
                                 <div>
                                     <h4 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
-                                        <TrendingUp className="h-4 w-4 text-emerald-500" /> Summary
+                                        Summary
                                     </h4>
                                     <p className="leading-relaxed text-foreground/90">{data.assessment.summary}</p>
                                 </div>
@@ -272,7 +273,6 @@ export default function Results() {
                                     <ul className="space-y-2">
                                         {data.assessment.keyFindings.map((finding, i) => (
                                             <li key={i} className="flex gap-3 text-sm text-foreground/90">
-                                                <span className="mt-1 text-amber-500">•</span>
                                                 <span>{finding}</span>
                                             </li>
                                         ))}

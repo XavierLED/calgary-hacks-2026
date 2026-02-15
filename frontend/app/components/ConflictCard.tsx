@@ -17,7 +17,8 @@ export function ConflictCard({ title, icon, borderColor, defaultExpanded = false
 
     return (
         <motion.div
-            className={`overflow-hidden rounded-xl border-l-4 ${borderColor} bg-white outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border`}
+            className={`overflow-hidden rounded-xl border-4-1 ${borderColor} bg-white outline outline-[0.4px] -outline-offset-[0.4px]`}
+            style={{ outlineColor: 'var(--color-gray-border)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}

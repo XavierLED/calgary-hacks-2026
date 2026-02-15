@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
-@theme {
+:root {
     --font-heading: var(--font-heading);
     --font-body: var(--font-body);
 
     --color-blue-primary: #192BC2;
 
     --color-red-accent: #E1516B;
+    --color-light-red-accent: #F7D3DA;
     --color-orange-accent: #E17751;
+    --color-light-orange-accent: #F7DDD3;
+    --color-blue-accent: #516BE1;
+    --color-light-blue-accent: #D3DAF7;
 
     --color-text-dark: #1A1A1A;
     --color-text-gray: #4C4C4C;
