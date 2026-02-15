@@ -207,15 +207,3 @@ Frontend will be available at:
 ```
 http://localhost:3000
 ```
-
----
-
-## **🔗 Connecting Frontend → Backend**
-
-The frontend sends requests to:
-
-```
-http://localhost:8000/analyze?url=YOUR_URL
-```
-
-Make sure the backend is running before using the UI.
