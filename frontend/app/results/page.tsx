@@ -61,7 +61,7 @@ export default function Results() {
                 {/* Header */}
                 <div className="mb-8 flex items-center justify-between">
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-                        <Link href="/analyze" className="inline-flex items-center gap-2 text-text-warm transition-colors hover:text-foreground">
+                        <Link href="/" className="inline-flex items-center gap-2 text-text-warm transition-colors hover:text-foreground">
                             <ArrowLeft className="h-5 w-5" />
                             <span>New Analysis</span>
                         </Link>

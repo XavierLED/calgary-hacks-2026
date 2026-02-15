@@ -1,6 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
+const ANALYSIS_STEPS = [
+    { text: "Extracting entities and names..." },
+    { text: "Mapping known affiliations..." },
+    { text: "Cross-referencing funding sources..." },
+    { text: "Identifying potential conflicts..." },
+];
 
 const features = [
     {
@@ -17,7 +27,89 @@ const features = [
     },
 ];
 
+
+
 export default function Home() {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [currentStep, setCurrentStep] = useState(0);
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (!loading) return;
+
+        const stepInterval = setInterval(() => {
+            setCurrentStep((prev) => {
+                if (prev < ANALYSIS_STEPS.length - 1) return prev + 1;
+                return prev;
+            });
+        }, 2000);
+
+        const progressInterval = setInterval(() => {
+            setProgress((prev) => {
+                if (prev >= 100) return 100;
+                return prev + 1;
+            });
+        }, 80);
+
+        return () => {
+            clearInterval(stepInterval);
+            clearInterval(progressInterval);
+        };
+    }, [loading]);
+
+    useEffect(() => {
+        if (progress >= 100) {
+            const timeout = setTimeout(() => router.push("/results"), 800);
+            return () => clearTimeout(timeout);
+        }
+    }, [progress, router]);
+
+    const handleAnalyze = () => {
+        setLoading(true);
+        setCurrentStep(0);
+        setProgress(0);
+    };
+
+    if (loading) {
+        return (
+            <div className="relative min-h-screen overflow-hidden bg-background">
+
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-[55%] select-none opacity-40 sm:opacity-60">
+                    <Image
+                        src="/assets/node_graph.svg"
+                        alt=""
+                        fill
+                        className="object-contain object-right-top"
+                        priority
+                        aria-hidden="true"
+                    />
+                </div>
+
+                <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6">
+
+                    <h1 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                        Analyzing Transparency
+                    </h1>
+                    <p className="mt-3 text-lg text-text-warm">
+                        Scanning multiple data sources for conflicts of interest
+                    </p>
+
+                    <div className="mt-10 h-2 w-full max-w-xl overflow-hidden rounded-full bg-gray-border">
+                        <div
+                            className="h-full rounded-full transition-all duration-300 ease-out"
+                            style={{ background: "linear-gradient(217deg, #E17751 -18.39%, #E1516B 98.63%)", width: `${progress}%` }}
+                        />
+                    </div>
+
+                    <p className="mt-6 text-base text-text-warm transition-all duration-500">
+                        {ANALYSIS_STEPS[currentStep].text}
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="relative min-h-screen overflow-hidden bg-background">
 
@@ -43,17 +135,24 @@ export default function Home() {
                         Reveal Hidden Connections
                     </h1>
 
-                    <p className="mt-6 max-w-xl text-lg leading-relaxed text-text-warm md:text-xl">
+                    <p className="mt-4 max-w-xl text-lg leading-relaxed text-text-warm md:text-xl">
                         A transparency tool for analyzing conflicts of interest in research, journalism, and
                         public discourse
                     </p>
-
-                    <Link
-                        href="/analyze"
-                        className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-primary px-10 py-3 font-heading text-xl font-medium leading-8 text-white cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
-                    >
-                        Start Analysis
-                    </Link>
+                    <div className="flex flex-row w-fit gap-4  mt-4 justify-center items-center w-full max-w-2xl rounded-xl p-4">
+                        <input
+                            type="text"
+                            placeholder="Paste a URL..."
+                            className="mt-2 w-200 h-14 rounded-lg bg-background px-4 py-3 text-base text-foreground outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border placeholder:text-text-warm focus:outline-blue-primary"
+                        />
+                        <button
+                            onClick={handleAnalyze}
+                            type="button"
+                            className="mt-2 w-[50%] inline-flex items-center justify-center gap-2 rounded-lg bg-blue-primary px-2 py-3 font-heading text-xl font-medium leading-8 text-white cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-[0.98]"
+                        >
+                            Start Analysis
+                        </button>
+                    </div>
                 </main>
 
                 <section className="mx-auto px-6 py-10 md:px-16">
@@ -97,6 +196,6 @@ export default function Home() {
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 }

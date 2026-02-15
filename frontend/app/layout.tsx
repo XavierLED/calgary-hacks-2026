@@ -15,7 +15,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-    title: "Conflict Checker",
+    title: "Trace",
     description: "Analyze conflicts of interest in research, journalism, and public discourse",
 };
 
