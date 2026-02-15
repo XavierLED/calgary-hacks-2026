@@ -70,6 +70,7 @@ def extract_from_arxiv(url: str) -> Dict[str, Any]:
             "abstract": summary,
             "published_date": published,
             "categories": categories[:3] if categories else [],
+            "publisher": "".join(authors),
             "url": url,
             "source": "arXiv",
             "arxiv_id": arxiv_id
@@ -154,6 +155,7 @@ def extract_from_pubmed(url: str) -> Dict[str, Any]:
             "abstract": None,  # Need another API call for abstract
             "published_date": result.get("pubdate"),
             "journal": result.get("fulljournalname"),
+            "publisher": "".join(authors),
             "pmid": pmid,
             "url": url,
             "source": "PubMed"
@@ -164,24 +166,4 @@ def extract_from_pubmed(url: str) -> Dict[str, Any]:
 
 
 
-def extract_authors_from_text(text: str) -> List[str]:
-    """Try to extract author names from text"""
-    # Look for common author patterns
-    authors = []
-    
-    # Pattern: "Authors: Name1, Name2"
-    match = re.search(r'(?:Authors?|By)[:\s]+([^\.]+)', text, re.IGNORECASE)
-    if match:
-        author_text = match.group(1)
-        authors = [a.strip() for a in author_text.split(',')]
-    
-    return authors[:10]  # Limit to 10 authors
 
-
-def extract_abstract_from_text(text: str) -> Optional[str]:
-    """Try to extract abstract from text"""
-    # Look for abstract section
-    match = re.search(r'(?:Abstract|ABSTRACT)[:\s]+(.*?)(?:\n\n|\n[A-Z])', text, re.DOTALL)
-    if match:
-        return match.group(1).strip()[:500]  # First 500 chars
-    return None

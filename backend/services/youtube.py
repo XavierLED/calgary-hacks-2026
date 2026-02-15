@@ -17,7 +17,7 @@ def transform_youtube_url(url: str):
     v_id = get_youtube_video_id(url)
 
     #get text from transcript
-    transcript = get_transcript_text(v_id, serp_api_key)
+    #transcript = get_transcript_text(v_id, serp_api_key)
 
     #get info from video api
     video_info = get_youtube_video_info(v_id, serp_api_key)
@@ -28,10 +28,11 @@ def transform_youtube_url(url: str):
 
     data = {
         "title" : title,
-        "transcript": transcript,
+        #"transcript": transcript,
         "description": description,
-        "channel": channel,
-        "sources": sources
+        "publisher": channel,
+        "sources": sources,
+        "published_date": video_info["published_date"]
     }
 
     return data
