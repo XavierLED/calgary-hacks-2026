@@ -33,11 +33,8 @@ export default function Home() {
 
             <div className="relative z-10 flex min-h-screen flex-col">
 
-                <nav className="flex items-center gap-3 px-8 pt-8 md:px-16 md:pt-12">
-                    <div className="h-9 w-9 rounded-md bg-blue-primary" />
-                    <span className="font-heading text-lg font-semibold tracking-tight text-foreground">
-                        Conflict Checker
-                    </span>
+                <nav className="px-8 pt-8 md:px-16 md:pt-12">
+                    <Image src="/assets/logo.svg" alt="Trace" width={88} height={32} priority />
                 </nav>
 
                 <main className="flex flex-1 flex-col items-center justify-center gap-0.5 text-center">

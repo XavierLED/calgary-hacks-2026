@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const ANALYSIS_STEPS = [
-    { icon: "🔍", text: "Extracting entities and names" },
-    { icon: "🔗", text: "Mapping known affiliations" },
-    { icon: "📊", text: "Cross-referencing funding sources" },
-    { icon: "⚠️", text: "Identifying potential conflicts" },
+    { text: "Extracting entities and names..." },
+    { text: "Mapping known affiliations..." },
+    { text: "Cross-referencing funding sources..." },
+    { text: "Identifying potential conflicts..." },
 ];
 
 export default function Analyze() {
@@ -69,13 +69,6 @@ export default function Analyze() {
                 </div>
 
                 <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6">
-                    {/* Spinner */}
-                    <div className="absolute top-8 right-8 md:top-12 md:right-16">
-                        <svg className="h-8 w-8 animate-spin text-text-warm" viewBox="0 0 24 24" fill="none">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-                            <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
-                    </div>
 
                     <h1 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                         Analyzing Transparency
@@ -84,38 +77,16 @@ export default function Analyze() {
                         Scanning multiple data sources for conflicts of interest
                     </p>
 
-                    {/* Progress bar */}
                     <div className="mt-10 h-2 w-full max-w-xl overflow-hidden rounded-full bg-gray-border">
                         <div
-                            className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 transition-all duration-300 ease-out"
-                            style={{ width: `${progress}%` }}
+                            className="h-full rounded-full transition-all duration-300 ease-out"
+                            style={{ background: "linear-gradient(217deg, #E17751 -18.39%, #E1516B 98.63%)", width: `${progress}%` }}
                         />
                     </div>
 
-                    {/* Steps */}
-                    <div className="mt-10 w-full max-w-xl space-y-3">
-                        {ANALYSIS_STEPS.map((step, i) => (
-                            <div
-                                key={step.text}
-                                className={`flex items-center gap-4 rounded-xl bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-all duration-500 ${i <= currentStep ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                                    }`}
-                            >
-                                <span className="text-xl">{step.icon}</span>
-                                <span className="flex-1 text-base text-foreground">{step.text}</span>
-                                {i < currentStep && (
-                                    <svg className="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                )}
-                                {i === currentStep && (
-                                    <svg className="h-5 w-5 animate-spin text-blue-primary" viewBox="0 0 24 24" fill="none">
-                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-                                        <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                    </svg>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                    <p className="mt-6 text-base text-text-warm transition-all duration-500">
+                        {ANALYSIS_STEPS[currentStep].text}
+                    </p>
                 </div>
             </div>
         );
@@ -138,11 +109,8 @@ export default function Analyze() {
             <div className="relative z-10 flex min-h-screen flex-col">
 
                 <nav className="px-8 pt-8 md:px-16 md:pt-12">
-                    <Link href="/" className="inline-flex items-center gap-3">
-                        <div className="h-9 w-9 rounded-md bg-blue-primary" />
-                        <span className="font-heading text-lg font-semibold tracking-tight text-foreground">
-                            Conflict Checker
-                        </span>
+                    <Link href="/">
+                        <Image src="/assets/logo.svg" alt="Trace" width={88} height={32} priority />
                     </Link>
                 </nav>
 
