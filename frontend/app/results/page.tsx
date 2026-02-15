@@ -100,7 +100,8 @@ export default function Results() {
                     {/* ── Left sidebar ── */}
                     <div className="space-y-6">
                         <motion.div
-                            className="rounded-xl bg-white p-8 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border"
+                            className="rounded-xl bg-white p-8 outline outline-[0.4px] -outline-offset-[0.4px]"
+                            style={{ outlineColor: 'var(--color-gray-border)' }}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5 }}
@@ -158,24 +159,6 @@ export default function Results() {
                                 </div>
                             </div>
                         </motion.div>
-
-                        {/* Transparency disclaimer */}
-                        <motion.div
-                            className="rounded-lg bg-amber-50 p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-amber-300"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                        >
-                            <div className="flex gap-3">
-                                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-amber-900">Transparency Note</p>
-                                    <p className="mt-1 text-xs text-amber-800">
-                                        This analysis uses publicly available data and AI inference. Always verify independently before drawing conclusions.
-                                    </p>
-                                </div>
-                            </div>
-                        </motion.div>
                     </div>
 
                     {/* ── Right panel ── */}
@@ -184,7 +167,7 @@ export default function Results() {
                         <ConflictCard title="Entities & Affiliations" icon={<Users className="h-6 w-6" />} borderColor="border-l-cyan-500" defaultExpanded>
                             <div className="space-y-4">
                                 {data.entities.map((e, i) => (
-                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-colors hover:outline-blue-primary/50">
+                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] transition-colors hover:outline-blue-primary/50" style={{ outlineColor: 'var(--color-gray-border)' }}>
                                         <div className="mb-2 flex items-start justify-between">
                                             <div>
                                                 <h4 className="font-semibold text-foreground">{e.name}</h4>
@@ -203,9 +186,6 @@ export default function Results() {
                                                 ))}
                                             </div>
                                         )}
-                                        <div className="mt-3 text-xs">
-                                            <DataSource name={e.verified ? "Public records" : "AI-inferred"} verified={e.verified} />
-                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -215,7 +195,7 @@ export default function Results() {
                         <ConflictCard title="Funding & Sponsorship" icon={<DollarSign className="h-6 w-6" />} borderColor="border-l-blue-500" defaultExpanded>
                             <div className="space-y-4">
                                 {data.funding.map((f, i) => (
-                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-colors hover:outline-blue-primary/50">
+                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] transition-colors hover:outline-blue-primary/50" style={{ outlineColor: 'var(--color-gray-border)' }}>
                                         <div className="mb-2 flex items-start justify-between">
                                             <div>
                                                 <div className="mb-1 flex items-center gap-2">
@@ -232,7 +212,7 @@ export default function Results() {
                                         </div>
                                         {f.conflictNote && (
                                             <div className="mt-3 rounded-md bg-amber-50 p-2.5 text-xs text-amber-800">
-                                                ⚠️ {f.conflictNote}
+                                                 {f.conflictNote}
                                             </div>
                                         )}
                                         <div className="mt-3 flex items-center gap-4 text-xs">
@@ -283,7 +263,7 @@ export default function Results() {
                             <div className="space-y-6">
                                 <div>
                                     <h4 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
-                                        <TrendingUp className="h-4 w-4 text-emerald-500" /> Summary
+                                        Summary
                                     </h4>
                                     <p className="leading-relaxed text-foreground/90">{data.assessment.summary}</p>
                                 </div>
@@ -293,7 +273,6 @@ export default function Results() {
                                     <ul className="space-y-2">
                                         {data.assessment.keyFindings.map((finding, i) => (
                                             <li key={i} className="flex gap-3 text-sm text-foreground/90">
-                                                <span className="mt-1 text-amber-500">•</span>
                                                 <span>{finding}</span>
                                             </li>
                                         ))}
