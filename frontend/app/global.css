@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
-:root {
+@theme {
     --font-heading: var(--font-heading);
     --font-body: var(--font-body);
 
     --color-blue-primary: #192BC2;
-
     --color-red-accent: #E1516B;
     --color-light-red-accent: #F7D3DA;
     --color-orange-accent: #E17751;
@@ -21,4 +20,25 @@
     --color-white: #FFFFFF;
     --color-background: #FCFCFC;
     --color-foreground: #1A1A1A;
+}
+
+@layer base {
+
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+:root {
+    --background: var(--color-background);
+    --foreground: var(--color-foreground);
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
 }
