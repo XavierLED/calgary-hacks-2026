@@ -1,20 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+
 import { motion } from "motion/react";
 import {
     ArrowLeft,
-    Building2,
-    DollarSign,
-    Users,
     FileText,
+    Users,
+    DollarSign,
+    AlertTriangle,
+    ClipboardList,
     Download,
     Share2,
-    AlertCircle,
+    Calendar,
     ExternalLink,
     TrendingUp,
-    Calendar,
+    Link as LinkIcon,
 } from "lucide-react";
 import { ScoreGauge } from "../components/ScoreGauge";
 import { RiskBadge } from "../components/RiskBadge";
@@ -22,51 +23,39 @@ import { Tag } from "../components/Tag";
 import { ConflictCard } from "../components/ConflictCard";
 import { DataSource } from "../components/DataSource";
 
-const analysisData = {
-    subject: "Dr. Sarah Johnson",
-    type: "individual",
-    score: 68,
-    riskLevel: "moderate" as const,
-    lastUpdated: "2026-02-14",
+// ─── Data ──────────────────────────────────────────────────────────
+// TODO: Replace with real API call
+import { MOCK_RESULT } from "../lib/mockData";
+import type { AnalysisResult, ConflictSeverity, SourceType } from "../lib/types";
 
-    institutionalAffiliations: [
-        { name: "MIT Computer Science Department", role: "Professor", type: "academic", since: "2018" },
-        { name: "OpenAI", role: "Advisory Board Member", type: "private", since: "2022" },
-        { name: "National AI Safety Institute", role: "Research Fellow", type: "government", since: "2023" },
-        { name: "AI Ethics Foundation", role: "Board Member", type: "academic", since: "2020" },
-    ],
-
-    fundingSources: [
-        { source: "National Science Foundation", amount: "$2,000,000", purpose: "AI Safety Research Grant", type: "government", date: "2024", verified: true },
-        { source: "Google Research", amount: "$500,000", purpose: "Machine Learning Infrastructure", type: "private", date: "2023", verified: true },
-        { source: "Microsoft Research", amount: "$350,000", purpose: "AI Alignment Study", type: "private", date: "2023", verified: true },
-        { source: "OpenPhilanthropy", amount: "$150,000", purpose: "General Operating Support", type: "private", date: "2024", verified: true },
-    ],
-
-    politicalConnections: [
-        { type: "Campaign Contribution", recipient: "Tech Innovation PAC", amount: "$3,000", date: "2023", category: "political" },
-        { type: "Congressional Testimony", event: "Senate Committee on AI Regulation", date: "March 2024", category: "political" },
-        { type: "Policy Advisory", organization: "White House Office of Science and Technology", role: "Informal Consultant", date: "2023-Present", category: "government" },
-    ],
-
-    assessment: {
-        summary: "Dr. Johnson has a moderate level of potential conflicts of interest. While her academic position provides independence, her advisory role at OpenAI while conducting AI safety research creates potential conflicts, particularly given the substantial corporate funding from major tech companies.",
-        keyIssues: [
-            "OpenAI advisory board role while researching AI safety could influence research objectivity",
-            "Significant funding from companies (Google, Microsoft) that compete in AI space",
-            "Congressional testimony while receiving tech industry funding may affect policy recommendations",
-        ],
-        disclosureStatus: "Most financial relationships are publicly disclosed through university and government filings. OpenAI advisory role disclosed on personal website.",
-        fieldComparison: "Conflicts are typical for senior AI researchers. Industry collaboration is common but usually disclosed.",
-    },
+const SOURCE_LABELS: Record<SourceType, string> = {
+    paper: "Research Paper",
+    video: "Video",
+    news: "News Article",
+    article: "Article",
+    other: "Source",
 };
 
+const SEVERITY_COLORS: Record<ConflictSeverity, string> = {
+    low: "text-emerald-600",
+    moderate: "text-amber-600",
+    high: "text-red-600",
+};
+
+const SEVERITY_BG: Record<ConflictSeverity, string> = {
+    low: "bg-emerald-50 outline-emerald-200",
+    moderate: "bg-amber-50 outline-amber-200",
+    high: "bg-red-50 outline-red-200",
+};
+
+// ─── Component ─────────────────────────────────────────────────────
 export default function Results() {
+    // TODO: Replace with real data fetching
+    const data: AnalysisResult = MOCK_RESULT;
+
     return (
         <div className="relative min-h-screen bg-background">
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-[55%] select-none opacity-20">
-                <Image src="/assets/node_graph.svg" alt="" fill className="object-contain object-right-top" priority aria-hidden="true" />
-            </div>
+
 
             <div className="relative z-10 mx-auto max-w-7xl px-6 py-8 md:px-12">
                 {/* Header */}
@@ -92,7 +81,7 @@ export default function Results() {
 
                 {/* Main grid */}
                 <div className="grid gap-8 lg:grid-cols-[350px_1fr]">
-                    {/* Left sidebar */}
+                    {/* ── Left sidebar ── */}
                     <div className="space-y-6">
                         <motion.div
                             className="rounded-xl bg-white p-8 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border"
@@ -100,39 +89,56 @@ export default function Results() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <div className="mb-6">
-                                <h2 className="font-heading text-2xl font-bold text-foreground">{analysisData.subject}</h2>
-                                <div className="mt-2 flex items-center gap-2 text-sm text-text-warm">
-                                    <Calendar className="h-4 w-4" />
-                                    <span>Updated {analysisData.lastUpdated}</span>
-                                </div>
+                            {/* Source info */}
+                            <span className="mb-2 inline-block rounded-full bg-blue-100 px-3 py-0.5 text-xs font-semibold text-blue-700">
+                                {SOURCE_LABELS[data.source.type]}
+                            </span>
+                            <h2 className="font-heading text-xl font-bold leading-snug text-foreground">
+                                {data.source.title}
+                            </h2>
+                            <p className="mt-2 text-sm text-text-warm">{data.source.authors.join(", ")}</p>
+                            <div className="mt-1 flex items-center gap-2 text-xs text-text-warm">
+                                <Calendar className="h-3 w-3" />
+                                <span>{data.source.publisher} · {data.source.publishedDate}</span>
+                            </div>
+                            {data.source.url && (
+                                <a
+                                    href={data.source.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-2 inline-flex items-center gap-1 text-xs text-blue-primary hover:underline"
+                                >
+                                    <LinkIcon className="h-3 w-3" /> View source
+                                </a>
+                            )}
+
+                            {/* Score */}
+                            <div className="mt-6 flex justify-center">
+                                <ScoreGauge score={data.score} size={220} />
                             </div>
 
-                            <div className="mb-6 flex justify-center">
-                                <ScoreGauge score={analysisData.score} size={220} />
+                            <div className="mb-4 flex justify-center">
+                                <RiskBadge level={data.riskLevel} />
                             </div>
 
-                            <div className="mb-6 flex justify-center">
-                                <RiskBadge level={analysisData.riskLevel} />
-                            </div>
-
+                            {/* Quick stats */}
                             <div className="space-y-3 border-t border-gray-border pt-6">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm text-text-warm">Affiliations</span>
-                                    <span className="font-semibold text-foreground">{analysisData.institutionalAffiliations.length}</span>
+                                    <span className="text-sm text-text-warm">Entities Found</span>
+                                    <span className="font-semibold text-foreground">{data.entities.length}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm text-text-warm">Funding Sources</span>
-                                    <span className="font-semibold text-foreground">{analysisData.fundingSources.length}</span>
+                                    <span className="text-sm text-text-warm">Funding Connections</span>
+                                    <span className="font-semibold text-foreground">{data.funding.length}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-sm text-text-warm">Political Connections</span>
-                                    <span className="font-semibold text-foreground">{analysisData.politicalConnections.length}</span>
+                                    <span className="text-sm text-text-warm">Conflicts Identified</span>
+                                    <span className="font-semibold text-foreground">{data.conflicts.length}</span>
                                 </div>
                             </div>
                         </motion.div>
 
-                        {/* Disclosure notice */}
+                        {/* Transparency disclaimer */}
                         <motion.div
                             className="rounded-lg bg-amber-50 p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-amber-300"
                             initial={{ opacity: 0 }}
@@ -140,98 +146,111 @@ export default function Results() {
                             transition={{ delay: 0.3 }}
                         >
                             <div className="flex gap-3">
-                                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
+                                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
                                 <div>
                                     <p className="text-sm font-medium text-amber-900">Transparency Note</p>
                                     <p className="mt-1 text-xs text-amber-800">
-                                        This analysis uses publicly available data. Verify independently before making decisions.
+                                        This analysis uses publicly available data and AI inference. Always verify independently before drawing conclusions.
                                     </p>
                                 </div>
                             </div>
                         </motion.div>
                     </div>
 
-                    {/* Right panel */}
+                    {/* ── Right panel ── */}
                     <div className="space-y-6">
-                        {/* Institutional Affiliations */}
-                        <ConflictCard title="Institutional Affiliations" icon={<Building2 className="h-6 w-6" />} borderColor="border-l-cyan-500" defaultExpanded>
+                        {/* Entities */}
+                        <ConflictCard title="Entities & Affiliations" icon={<Users className="h-6 w-6" />} borderColor="border-l-cyan-500" defaultExpanded>
                             <div className="space-y-4">
-                                {analysisData.institutionalAffiliations.map((a, i) => (
+                                {data.entities.map((e, i) => (
                                     <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-colors hover:outline-blue-primary/50">
                                         <div className="mb-2 flex items-start justify-between">
                                             <div>
-                                                <h4 className="font-semibold text-foreground">{a.name}</h4>
-                                                <p className="text-sm text-text-warm">{a.role}</p>
+                                                <h4 className="font-semibold text-foreground">{e.name}</h4>
+                                                <p className="text-sm text-text-warm">{e.role}</p>
                                             </div>
-                                            <Tag variant={a.type as "academic" | "private" | "government"}>{a.type}</Tag>
+                                            <Tag variant={e.type === "person" ? "academic" : e.type === "organization" ? "private" : "government"}>
+                                                {e.type.replace("_", " ")}
+                                            </Tag>
                                         </div>
-                                        <div className="mt-3 flex items-center gap-4 text-xs">
-                                            <span className="flex items-center gap-1 text-text-warm">
-                                                <Calendar className="h-3 w-3" /> Since {a.since}
-                                            </span>
-                                            <DataSource name="LinkedIn" verified />
+                                        {e.affiliations.length > 0 && (
+                                            <div className="mt-2 flex flex-wrap gap-2">
+                                                {e.affiliations.map((a, j) => (
+                                                    <span key={j} className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs text-blue-700">
+                                                        {a}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                        <div className="mt-3 text-xs">
+                                            <DataSource name={e.verified ? "Public records" : "AI-inferred"} verified={e.verified} />
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </ConflictCard>
 
-                        {/* Funding Sources */}
-                        <ConflictCard title="Funding Sources" icon={<DollarSign className="h-6 w-6" />} borderColor="border-l-blue-500" defaultExpanded>
+                        {/* Funding */}
+                        <ConflictCard title="Funding & Sponsorship" icon={<DollarSign className="h-6 w-6" />} borderColor="border-l-blue-500" defaultExpanded>
                             <div className="space-y-4">
-                                {analysisData.fundingSources.map((f, i) => (
+                                {data.funding.map((f, i) => (
                                     <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-colors hover:outline-blue-primary/50">
                                         <div className="mb-2 flex items-start justify-between">
                                             <div>
                                                 <div className="mb-1 flex items-center gap-2">
-                                                    <h4 className="font-semibold text-foreground">{f.source}</h4>
+                                                    <h4 className="font-semibold text-foreground">{f.funder}</h4>
                                                     {f.verified && <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" title="Verified" />}
                                                 </div>
-                                                <p className="mb-1 text-sm text-text-warm">{f.purpose}</p>
-                                                <div className="flex items-center gap-3">
-                                                    <span className="font-semibold text-blue-primary">{f.amount}</span>
-                                                    <Tag variant={f.type as "government" | "private"}>{f.type}</Tag>
+                                                <p className="text-sm text-text-warm">{f.purpose}</p>
+                                                <p className="mt-1 text-xs text-text-warm">→ {f.recipient}</p>
+                                                <div className="mt-2 flex items-center gap-3">
+                                                    {f.amount && <span className="font-semibold text-blue-primary">{f.amount}</span>}
+                                                    <Tag variant={f.type === "government" ? "government" : "private"}>{f.type}</Tag>
                                                 </div>
                                             </div>
                                         </div>
+                                        {f.conflictNote && (
+                                            <div className="mt-3 rounded-md bg-amber-50 p-2.5 text-xs text-amber-800">
+                                                ⚠️ {f.conflictNote}
+                                            </div>
+                                        )}
                                         <div className="mt-3 flex items-center gap-4 text-xs">
                                             <span className="flex items-center gap-1 text-text-warm">
                                                 <Calendar className="h-3 w-3" /> {f.date}
                                             </span>
-                                            <DataSource name="NSF Database" verified />
+                                            <DataSource name="Grants database" verified={f.verified} />
                                         </div>
                                     </div>
                                 ))}
-                                <div className="border-t border-gray-border pt-4">
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-text-warm">Total Disclosed Funding</span>
-                                        <span className="font-heading text-lg font-bold text-foreground">$3,000,000+</span>
-                                    </div>
-                                </div>
                             </div>
                         </ConflictCard>
 
-                        {/* Political Connections */}
-                        <ConflictCard title="Political Connections" icon={<Users className="h-6 w-6" />} borderColor="border-l-purple-500" defaultExpanded>
+                        {/* Conflicts */}
+                        <ConflictCard title="Conflicts of Interest" icon={<AlertTriangle className="h-6 w-6" />} borderColor="border-l-red-400" defaultExpanded>
                             <div className="space-y-4">
-                                {analysisData.politicalConnections.map((c, i) => (
-                                    <div key={i} className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border transition-colors hover:outline-blue-primary/50">
+                                {data.conflicts.map((c, i) => (
+                                    <div
+                                        key={i}
+                                        className={`rounded-lg p-4 outline outline-[0.4px] -outline-offset-[0.4px] ${SEVERITY_BG[c.severity]}`}
+                                    >
                                         <div className="mb-2 flex items-start justify-between">
-                                            <div>
-                                                <span className="text-xs font-semibold uppercase tracking-wider text-purple-500">{c.type}</span>
-                                                <h4 className="mt-1 font-semibold text-foreground">
-                                                    {c.recipient || c.event || c.organization}
-                                                </h4>
-                                                {"role" in c && c.role && <p className="text-sm text-text-warm">{c.role}</p>}
-                                                {"amount" in c && c.amount && <p className="mt-1 font-semibold text-blue-primary">{c.amount}</p>}
-                                            </div>
-                                            <Tag variant={c.category as "political" | "government"}>{c.category}</Tag>
-                                        </div>
-                                        <div className="mt-3 flex items-center gap-4 text-xs">
-                                            <span className="flex items-center gap-1 text-text-warm">
-                                                <Calendar className="h-3 w-3" /> {c.date}
+                                            <h4 className="font-semibold text-foreground">{c.title}</h4>
+                                            <span className={`text-xs font-bold uppercase tracking-wider ${SEVERITY_COLORS[c.severity]}`}>
+                                                {c.severity}
                                             </span>
-                                            <DataSource name="OpenSecrets" verified />
+                                        </div>
+                                        <p className="text-sm leading-relaxed text-foreground/90">{c.description}</p>
+                                        <div className="mt-3 flex flex-wrap gap-2">
+                                            {c.entities.map((ent, j) => (
+                                                <span key={j} className="rounded-full bg-white/80 px-2.5 py-0.5 text-xs font-medium text-foreground outline outline-[0.4px] outline-gray-border">
+                                                    {ent}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <div className="mt-3 flex flex-wrap gap-3 text-xs text-text-warm">
+                                            {c.sources.map((s, j) => (
+                                                <DataSource key={j} name={s} verified />
+                                            ))}
                                         </div>
                                     </div>
                                 ))}
@@ -239,41 +258,41 @@ export default function Results() {
                         </ConflictCard>
 
                         {/* Assessment */}
-                        <ConflictCard title="Assessment & Analysis" icon={<FileText className="h-6 w-6" />} borderColor="border-l-emerald-500" defaultExpanded>
+                        <ConflictCard title="Assessment & Recommendations" icon={<ClipboardList className="h-6 w-6" />} borderColor="border-l-emerald-500" defaultExpanded>
                             <div className="space-y-6">
                                 <div>
                                     <h4 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
                                         <TrendingUp className="h-4 w-4 text-emerald-500" /> Summary
                                     </h4>
-                                    <p className="leading-relaxed text-foreground/90">{analysisData.assessment.summary}</p>
+                                    <p className="leading-relaxed text-foreground/90">{data.assessment.summary}</p>
                                 </div>
 
                                 <div>
-                                    <h4 className="mb-3 font-semibold text-foreground">Key Issues Identified</h4>
+                                    <h4 className="mb-3 font-semibold text-foreground">Key Findings</h4>
                                     <ul className="space-y-2">
-                                        {analysisData.assessment.keyIssues.map((issue, i) => (
+                                        {data.assessment.keyFindings.map((finding, i) => (
                                             <li key={i} className="flex gap-3 text-sm text-foreground/90">
                                                 <span className="mt-1 text-amber-500">•</span>
-                                                <span>{issue}</span>
+                                                <span>{finding}</span>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
 
                                 <div className="rounded-lg bg-background p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-gray-border">
-                                    <h4 className="mb-2 font-semibold text-foreground">Disclosure Status</h4>
-                                    <p className="text-sm leading-relaxed text-foreground/90">{analysisData.assessment.disclosureStatus}</p>
+                                    <h4 className="mb-2 font-semibold text-foreground">Transparency Notes</h4>
+                                    <p className="text-sm leading-relaxed text-foreground/90">{data.assessment.transparencyNotes}</p>
                                 </div>
 
                                 <div className="rounded-lg bg-cyan-50 p-4 outline outline-[0.4px] -outline-offset-[0.4px] outline-cyan-300">
-                                    <h4 className="mb-2 font-semibold text-cyan-700">Compared to Field Norms</h4>
-                                    <p className="text-sm leading-relaxed text-cyan-800">{analysisData.assessment.fieldComparison}</p>
+                                    <h4 className="mb-2 font-semibold text-cyan-700">Recommendation</h4>
+                                    <p className="text-sm leading-relaxed text-cyan-800">{data.assessment.recommendation}</p>
                                 </div>
 
                                 <div className="border-t border-gray-border pt-4">
                                     <p className="flex items-center gap-2 text-xs text-text-warm">
                                         <ExternalLink className="h-3 w-3" />
-                                        All findings linked to original data sources. Click to verify independently.
+                                        All findings linked to original data sources. Verify independently.
                                     </p>
                                 </div>
                             </div>

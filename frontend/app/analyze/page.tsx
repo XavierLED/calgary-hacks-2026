@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+
 const ANALYSIS_STEPS = [
     { text: "Extracting entities and names..." },
     { text: "Mapping known affiliations..." },
@@ -57,16 +58,7 @@ export default function Analyze() {
     if (loading) {
         return (
             <div className="relative min-h-screen overflow-hidden bg-background">
-                <div className="pointer-events-none absolute inset-y-0 right-0 w-[55%] select-none opacity-40 sm:opacity-60">
-                    <Image
-                        src="/assets/node_graph.svg"
-                        alt=""
-                        fill
-                        className="object-contain object-right-top"
-                        priority
-                        aria-hidden="true"
-                    />
-                </div>
+
 
                 <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6">
 

@@ -1,0 +1,153 @@
+import { AnalysisResult } from "./types";
+
+// ─── Mock data ─────────────────────────────────────────────────────
+// Replace this with a real API call, e.g.:
+//   const res = await fetch(`${API_URL}/analyze`, { method: "POST", body: ... });
+//   const data: AnalysisResult = await res.json();
+
+export const MOCK_RESULT: AnalysisResult = {
+    source: {
+        title: "The Impact of Corporate Lobbying on AI Regulation in North America",
+        url: "https://example.com/papers/ai-lobbying-2024",
+        type: "paper",
+        authors: ["Dr. Sarah Chen", "Prof. Michael Torres", "Dr. Aisha Patel"],
+        publisher: "Journal of Technology Policy",
+        publishedDate: "2024-11-15",
+        summary:
+            "A comprehensive study examining how major tech corporations have influenced AI safety legislation through lobbying efforts, campaign contributions, and advisory board placements.",
+    },
+
+    score: 72,
+    riskLevel: "moderate",
+    analyzedAt: new Date().toISOString(),
+
+    entities: [
+        {
+            name: "Dr. Sarah Chen",
+            type: "person",
+            role: "Lead Author",
+            affiliations: ["MIT CSAIL", "OpenAI Advisory Board"],
+            verified: true,
+        },
+        {
+            name: "Prof. Michael Torres",
+            type: "person",
+            role: "Co-Author",
+            affiliations: ["Stanford HAI", "Google DeepMind (former)"],
+            verified: true,
+        },
+        {
+            name: "Dr. Aisha Patel",
+            type: "person",
+            role: "Co-Author",
+            affiliations: ["University of Toronto", "Vector Institute"],
+            verified: true,
+        },
+        {
+            name: "National Science Foundation",
+            type: "funding_body",
+            role: "Primary Funder",
+            affiliations: [],
+            verified: true,
+        },
+        {
+            name: "OpenAI",
+            type: "organization",
+            role: "Subject of Study / Author Affiliation",
+            affiliations: [],
+            verified: true,
+        },
+        {
+            name: "Google DeepMind",
+            type: "organization",
+            role: "Subject of Study / Author Affiliation",
+            affiliations: [],
+            verified: true,
+        },
+    ],
+
+    funding: [
+        {
+            funder: "National Science Foundation",
+            recipient: "MIT CSAIL",
+            amount: "$1,200,000",
+            purpose: "AI Governance Research Grant",
+            type: "government",
+            date: "2023",
+            verified: true,
+        },
+        {
+            funder: "Google Research",
+            recipient: "Stanford HAI",
+            amount: "$400,000",
+            purpose: "Technology Policy Fellowship",
+            type: "corporate",
+            date: "2023",
+            verified: true,
+            conflictNote:
+                "Google is both a funder and a subject of the study's analysis of corporate lobbying.",
+        },
+        {
+            funder: "Open Philanthropy",
+            recipient: "Dr. Sarah Chen",
+            amount: "$150,000",
+            purpose: "AI Safety Research Support",
+            type: "nonprofit",
+            date: "2024",
+            verified: true,
+        },
+        {
+            funder: "Meta Platforms",
+            recipient: "University of Toronto",
+            amount: "$250,000",
+            purpose: "Responsible AI Initiative",
+            type: "corporate",
+            date: "2024",
+            verified: false,
+            conflictNote:
+                "Meta is a major lobbying entity discussed in the paper, creating a potential conflict.",
+        },
+    ],
+
+    conflicts: [
+        {
+            title: "Author-Subject Dual Role",
+            description:
+                "Dr. Sarah Chen serves on the OpenAI Advisory Board while the paper critically examines OpenAI's lobbying practices. This dual role could influence the paper's objectivity.",
+            severity: "high",
+            entities: ["Dr. Sarah Chen", "OpenAI"],
+            sources: ["OpenAI website", "MIT faculty directory"],
+        },
+        {
+            title: "Corporate Funding from Study Subjects",
+            description:
+                "Google Research funds Prof. Torres's institution while Google's lobbying efforts are analyzed in the study. This financial relationship may affect research independence.",
+            severity: "moderate",
+            entities: ["Prof. Michael Torres", "Google DeepMind", "Google Research"],
+            sources: ["Stanford HAI grants database", "Google Research blog"],
+        },
+        {
+            title: "Undisclosed Meta Funding",
+            description:
+                "Meta Platforms provides funding to a co-author's institution but is not disclosed in the paper's conflict of interest statement, despite Meta being discussed as a lobbying entity.",
+            severity: "high",
+            entities: ["Dr. Aisha Patel", "Meta Platforms"],
+            sources: ["University of Toronto partnerships page"],
+        },
+    ],
+
+    assessment: {
+        summary:
+            "This paper presents a moderate conflict of interest risk. The lead author's advisory role at OpenAI — a primary subject of the study — raises significant objectivity concerns. Additionally, two of the three co-authors receive funding from corporations whose lobbying practices the paper evaluates. While government funding (NSF) provides some independence, the corporate funding connections warrant reader awareness.",
+        keyFindings: [
+            "Lead author has an advisory role at OpenAI, a primary subject of the research",
+            "2 of 3 authors receive funding from companies analyzed in the paper",
+            "One funding source (Meta) was not disclosed in the paper's conflict statement",
+            "Government funding accounts for ~60% of total research support",
+        ],
+        transparencyNotes:
+            "The paper discloses the NSF and Google Research grants but omits the Meta funding connection. OpenAI advisory role is mentioned in author bios but not in the formal conflict of interest declaration.",
+        recommendation:
+            "Readers should consider the potential influence of corporate affiliations when evaluating the paper's conclusions about specific companies' lobbying practices.",
+    },
+};
