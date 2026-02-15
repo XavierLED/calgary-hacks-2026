@@ -184,10 +184,10 @@ def extract_non_youtube_links(video_api_response: Dict[str, Any]) -> List[str]:
         list: List of URLs that are not YouTube links
     """
     # Get description from the API response
-    links = video_api_response["description"]["links"]
-    
-    if not links:
+    if "links" not in video_api_response["description"].keys():
         return []
+    
+    links = video_api_response["description"]["links"]
     
     # Find all URLs in the description
     all_urls = []
