@@ -77,6 +77,9 @@ def build_prompt(data, url):
             - "opinions" must be a list of plain-text strings
             - Each string must contain exactly ONE opinion expressed by that entity
             - Keep each opinion short, clear, and neutral
+            6. Only assign opinions to entities who directly express them in the content.
+                Do NOT assign opinions to platforms, publishers, or organizations unless they explicitly speak.
+
 
             ============================================================
             OUTPUT FORMAT
@@ -110,7 +113,7 @@ def build_prompt(data, url):
 def extract_opinions(url):
     url_type=identify_url_type(url)
     data = None                               
-    if (url_type == "youtube"):
+    if (url_type == "youtube_video"):
         data = transform_youtube_url(url)
     elif (url_type == "article"):
         data = extract_article_content(url)
@@ -129,5 +132,4 @@ def extract_opinions(url):
 if __name__ == "__main__":
     url = "https://www.youtube.com/watch?v=v2lDJd54vOQ" 
     raw_output = extract_opinions(url) 
-    data = load_and_validate(raw_output) 
-    print(json.dumps(data, indent=2))
+    print(raw_output)
