@@ -31,10 +31,6 @@ def extract_article_content(article_url: str) -> Dict[str, Any]:
         "authors": article.authors,
         "publish_date": str(article.publish_date) if article.publish_date else None,
         "text": article.text,
-        "top_image": article.top_image,
-        "images": list(article.images),
-        "videos": article.movies,
-        "keywords": keywords,
         "summary": summary,
         "url": article.url
     }
