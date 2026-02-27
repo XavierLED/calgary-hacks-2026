@@ -1,5 +1,6 @@
 import json
-from fastapi import FastAPI
+from bson import ObjectId
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timezone
@@ -29,13 +30,28 @@ urls = db['urls']
 class URLRequest(BaseModel):
     url: str
 
+@app.get("/result/{id}")
+def get_result(id: str):
+    # Validate ObjectId
+    if not ObjectId.is_valid(id):
+        raise HTTPException(status_code=400, detail="Invalid ID")
+
+    doc = urls.find_one({"_id": ObjectId(id)})
+
+    if not doc:
+        raise HTTPException(status_code=404, detail="Result not found")
+
+    # delete ObjectId 
+    del doc["_id"]
+
+    return doc
+
 @app.post("/fetch")
 def fetch_url(req: URLRequest):
     #check if url exists in db
     result = urls.find_one({"url": req.url})
     if result:
-        del result["_id"]  # Remove ObjectId before returning
-        return result
+        return { "id" : str(result["_id"]) }
     
     #extract url data
     typee = dirr.identify_url_type(req.url)
@@ -60,7 +76,7 @@ def fetch_url(req: URLRequest):
                 "name": aff["entity"],
                 "type": "Personal Affiliation",
                 "role": aff["relationship"],
-                "affiliations": aff["summary"],
+                "affiliations": [aff["summary"]],
                 "verified": True
             }
         entities.append(thing)
@@ -159,12 +175,7 @@ def fetch_url(req: URLRequest):
         upsert=True
     )
 
-    
-    # Remove the _id that was added by insert_one
-    if "_id" in result:
-        del result["_id"]
-
-    return result
+    return { "id" : str(result["_id"]) }
 
 
 if __name__ == "__main__":
