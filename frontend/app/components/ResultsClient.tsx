@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import Link from "next/link";
 
@@ -16,16 +16,13 @@ import {
     ExternalLink,
     TrendingUp,
     Link as LinkIcon,
+    Tag,
 } from "lucide-react";
-import { ScoreGauge } from "../components/ScoreGauge";
-import { RiskBadge } from "../components/RiskBadge";
-import { Tag } from "../components/Tag";
-import { ConflictCard } from "../components/ConflictCard";
-import { DataSource } from "../components/DataSource";
-
-// TODO: Replace with real API call
-import { MOCK_RESULT } from "../lib/mockData";
-import type { AnalysisResult, ConflictSeverity, SourceType } from "../lib/types";
+import { AnalysisResult, ConflictSeverity, SourceType } from "../lib/types";
+import { ScoreGauge } from "./ScoreGauge";
+import { RiskBadge } from "./RiskBadge";
+import { ConflictCard } from "./ConflictCard";
+import { DataSource } from "./DataSource";
 
 
 const SOURCE_LABELS: Record<SourceType, string> = {
@@ -56,11 +53,9 @@ const SEVERITY_BG: Record<ConflictSeverity, string> = {
     high: "bg-red-50 outline-red-200",
 };
 
-export default function Results() {
-    // TODO: Replace with real data fetching
-    const data: AnalysisResult = MOCK_RESULT;
 
-    // Link risk level to score
+export function ResultsClient({ data }: { data: AnalysisResult }) {
+
     const getRiskLevel = (score: number): "low" | "moderate" | "high" => {
         if (score <= 33) return "low";
         if (score <= 66) return "moderate";
@@ -68,11 +63,11 @@ export default function Results() {
     };
 
     const riskLevel = getRiskLevel(data.score);
+    const sourceStyle = SOURCE_COLORS[data.source.type] ?? SOURCE_COLORS.other;
+    const sourceLabel = SOURCE_LABELS[data.source.type] ?? SOURCE_LABELS.other;
 
     return (
         <div className="relative min-h-screen bg-background">
-
-
             <div className="relative z-10 mx-auto max-w-7xl px-8 py-4 md:px-4 md:pt-12">
                 {/* Header */}
                 <div className="mb-8 flex items-center justify-between">
@@ -110,16 +105,16 @@ export default function Results() {
                             <span
                                 className="px-2 py-1 inline-flex justify-center items-center gap-2.5 text-xs font-medium rounded-lg"
                                 style={{
-                                    backgroundColor: SOURCE_COLORS[data.source.type].bg,
-                                    color: SOURCE_COLORS[data.source.type].text,
+                                    backgroundColor: sourceStyle.bg,
+                                    color: sourceStyle.text,
                                 }}
                             >
-                                {SOURCE_LABELS[data.source.type]}
+                                {sourceLabel}
                             </span>
                             <h2 className="font-heading text-xl font-bold leading-snug text-foreground pt-2">
                                 {data.source.title}
                             </h2>
-                            <p className="mt-2 text-sm text-text-warm">{data.source.authors.join(", ")}</p>
+                            <p className="mt-2 text-sm text-text-warm">{data.source.authors}</p>
                             <div className="mt-1 flex items-center gap-2 text-xs text-text-warm">
                                 <span>{data.source.publisher} · {data.source.publishedDate}</span>
                             </div>
@@ -212,7 +207,7 @@ export default function Results() {
                                         </div>
                                         {f.conflictNote && (
                                             <div className="mt-3 rounded-md bg-amber-50 p-2.5 text-xs text-amber-800">
-                                                 {f.conflictNote}
+                                                {f.conflictNote}
                                             </div>
                                         )}
                                         <div className="mt-3 flex items-center gap-4 text-xs">
@@ -250,7 +245,7 @@ export default function Results() {
                                         </div>
                                         <div className="mt-3 flex flex-wrap gap-3 text-xs text-text-warm">
                                             {c.sources.map((s, j) => (
-                                                <DataSource key={j} name={s} verified />
+                                                <DataSource key={j} name={s.title} url={s.url} verified />
                                             ))}
                                         </div>
                                     </div>

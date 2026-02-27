@@ -1,9 +1,9 @@
 #context.py
-from validate import load_and_validate
+from services.affiliations.validate import load_and_validate
 from dotenv import load_dotenv
 import os
 from google import genai
-from serp import build_serp_context, serp_search
+from services.affiliations.serp import build_serp_context, serp_search
 import json
 
 load_dotenv()

@@ -42,7 +42,7 @@ export interface ConflictOfInterest {
     description: string;
     severity: ConflictSeverity;
     entities: string[];
-    sources: string[];
+    sources: { title: string; url: string; summary: string }[];
 }
 
 export interface Assessment {

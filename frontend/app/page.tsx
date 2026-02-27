@@ -35,6 +35,7 @@ export default function Home() {
     const [currentStep, setCurrentStep] = useState(0);
     const [progress, setProgress] = useState(0);
     const [inputUrl, setInputUrl] = useState("");
+    const [urlId, setUrlId] = useState("");
 
     useEffect(() => {
         if (!loading) return;
@@ -61,7 +62,7 @@ export default function Home() {
 
     useEffect(() => {
         if (progress >= 100) {
-            const timeout = setTimeout(() => router.push("/results"), 800);
+            const timeout = setTimeout(() => router.push(`/results/${urlId}`), 800);
             return () => clearTimeout(timeout);
         }
     }, [progress, router]);
@@ -82,7 +83,7 @@ export default function Home() {
                 return;
             }
             // Success: go to next page with data (example: /analyze?url=...)
-            localStorage.setItem("analysisResult", JSON.stringify(data));
+            setUrlId(data.id);
             handleAnalyze();
         } catch (err) {
             alert("Network or server error.");

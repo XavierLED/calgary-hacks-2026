@@ -25,6 +25,10 @@ def identify_url_type(url: str) -> str:
         if _is_article_page(domain, path):
             return "article"
         
+        # Check for research paper
+        if _is_research_paper(url):
+            return "research"
+        
         return "other"
         
     except Exception:
@@ -92,6 +96,77 @@ def _is_article_page(domain: str, path: str) -> bool:
             return True
     
     return False
+
+def _is_research_paper(url: str) -> bool:
+    """
+    Determines if a URL is a research paper.
+    
+    Args:
+        url: The URL to check
+        
+    Returns:
+        bool: True if the URL is likely a research paper, False otherwise
+    """
+    try:
+        parsed = urlparse(url)
+        domain = parsed.netloc.lower()
+        path = parsed.path.lower()
+        
+        # Known research paper domains
+        research_domains = [
+            'arxiv.org',
+            'pubmed.ncbi.nlm.nih.gov',
+            'ncbi.nlm.nih.gov/pmc',
+            'doi.org',
+            'dx.doi.org',
+            'scholar.google.com',
+            'sciencedirect.com',
+            'springer.com',
+            'nature.com',
+            'science.org',
+            'pnas.org',
+            'cell.com',
+            'wiley.com',
+            'tandfonline.com',
+            'sagepub.com',
+            'jstor.org',
+            'ieee.org',
+            'acm.org',
+            'biorxiv.org',
+            'medrxiv.org',
+            'ssrn.com',
+            'researchgate.net',
+            'academia.edu'
+        ]
+        
+        # Check if domain matches known research sites
+        if any(research_domain in domain for research_domain in research_domains):
+            return True
+        
+        # Check for PDF papers
+        if path.endswith('.pdf'):
+            # Check if path contains research-related keywords
+            research_keywords = ['paper', 'article', 'journal', 'publication', 'research']
+            if any(keyword in path for keyword in research_keywords):
+                return True
+        
+        # Check for DOI patterns (Digital Object Identifier)
+        doi_pattern = r'10\.\d{4,}/[^\s]+'
+        if re.search(doi_pattern, url):
+            return True
+        
+        # Check for arXiv patterns
+        if 'arxiv.org' in domain or re.search(r'/\d{4}\.\d{4,5}', path):
+            return True
+        
+        # Check for PubMed patterns
+        if 'pubmed' in domain and re.search(r'/\d{8}', path):
+            return True
+        
+        return False
+        
+    except Exception:
+        return False
 
 
 # Example usage

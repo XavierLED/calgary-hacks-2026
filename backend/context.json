@@ -1,0 +1,480 @@
+{
+    "personal_affiliations": [
+        {
+            "relationship": "Executive Vice President",
+            "entity": "Beth Saunders",
+            "summary": "Beth Saunders was promoted to the position of Executive Vice President within the FOX News Media editorial team.",
+            "citations": [
+                14
+            ]
+        },
+        {
+            "relationship": "Chief Executive Officer of FOX Television Stations",
+            "entity": "Jack Abernethy",
+            "summary": "Jack Abernethy serves as the Chief Executive Officer for FOX Television Stations.",
+            "citations": [
+                11
+            ]
+        },
+        {
+            "relationship": "President and Executive Editor",
+            "entity": "Jay Wallace",
+            "summary": "Jay Wallace has been with FOX News Channel since its inception in 1996 and currently serves as the President and Executive Editor of FOX News Media.",
+            "citations": [
+                16
+            ]
+        },
+        {
+            "relationship": "Chief Financial Officer and Chief Operating Officer",
+            "entity": "Joseph Dorrego",
+            "summary": "Joseph Dorrego serves as the CFO and COO of FOX News Media.",
+            "citations": [
+                47
+            ]
+        },
+        {
+            "relationship": "Executive Chair and Chief Executive Officer",
+            "entity": "Lachlan Murdoch",
+            "summary": "Lachlan Murdoch is the Executive Chair and CEO of Fox Corporation, the parent company of Fox News. He took sole control of the companies following a family trust transition.",
+            "citations": [
+                2,
+                4,
+                7,
+                8,
+                9,
+                13,
+                41
+            ]
+        },
+        {
+            "relationship": "Chief Executive Officer",
+            "entity": "Mary Wells",
+            "summary": "Mary Wells is identified in organizational charts as the Chief Executive Officer of Fox News Network.",
+            "citations": [
+                15
+            ]
+        },
+        {
+            "relationship": "Executive Vice President, Morning Programming & Program Development",
+            "entity": "Megan Albano",
+            "summary": "Megan Albano serves as the Executive Vice President for Morning Programming and Program Development at Fox News.",
+            "citations": [
+                12
+            ]
+        },
+        {
+            "relationship": "Chairman Emeritus",
+            "entity": "Rupert Murdoch",
+            "summary": "Rupert Murdoch, the long-time leader of News Corp and 21st Century Fox, transitioned to the role of Chairman Emeritus for both FOX Corporation and News Corp in 2023.",
+            "citations": [
+                1,
+                2,
+                3,
+                8
+            ]
+        },
+        {
+            "relationship": "President of FOX Weather",
+            "entity": "Sharri Berg",
+            "summary": "Sharri Berg serves as the President of FOX Weather, a subsidiary unit of Fox News.",
+            "citations": [
+                12
+            ]
+        },
+        {
+            "relationship": "Chief Executive Officer of FOX News Media",
+            "entity": "Suzanne Scott",
+            "summary": "Suzanne Scott is the CEO of FOX News Media, overseeing Fox News Channel and its related linear networks.",
+            "citations": [
+                11,
+                17,
+                47
+            ]
+        }
+    ],
+    "political_affiliations": [
+        {
+            "relationship": "Ideological alignment",
+            "entity": "Conservative Ideology",
+            "summary": "Fox News is frequently analyzed and rated as having a conservative political bias, with its programming often overrepresenting conservative positions.",
+            "citations": [
+                22,
+                24,
+                25,
+                26
+            ]
+        },
+        {
+            "relationship": "Political influence",
+            "entity": "Republican Party",
+            "summary": "Studies on the 'Fox News Effect' suggest the network's introduction increased Republican vote shares and persuaded non-Republican viewers to vote for Republican candidates.",
+            "citations": [
+                19,
+                20,
+                23
+            ]
+        },
+        {
+            "relationship": "Editorial stance",
+            "entity": "Right-Leaning Bias",
+            "summary": "Multiple media bias rating organizations, including Ad Fontes Media and AllSides, classify Fox News's content and website as 'Skews Right' or 'Right'.",
+            "citations": [
+                18,
+                21,
+                24
+            ]
+        }
+    ],
+    "financial_affiliations": [
+        {
+            "relationship": "Institutional shareholder",
+            "entity": "BlackRock, Inc.",
+            "summary": "BlackRock, Inc. is one of the top institutional holders of Fox Corporation stock.",
+            "citations": [
+                42,
+                43,
+                44
+            ]
+        },
+        {
+            "relationship": "Revenue source",
+            "entity": "Cable Providers",
+            "summary": "Fox News generates approximately 65% of its revenue from fees negotiated with cable providers.",
+            "citations": [
+                29
+            ]
+        },
+        {
+            "relationship": "Institutional shareholder",
+            "entity": "Dodge & Cox",
+            "summary": "Dodge & Cox is a significant institutional shareholder in Fox Corporation, holding millions of shares.",
+            "citations": [
+                39,
+                43,
+                44
+            ]
+        },
+        {
+            "relationship": "Parent company",
+            "entity": "Fox Corporation",
+            "summary": "Fox News is a primary subsidiary of Fox Corporation, a publicly traded media company managed through segments including Cable Network Programming.",
+            "citations": [
+                4,
+                5,
+                6,
+                7,
+                37,
+                38,
+                40,
+                45,
+                46,
+                48
+            ]
+        },
+        {
+            "relationship": "Corporate advertiser",
+            "entity": "GlaxoSmithKline",
+            "summary": "GlaxoSmithKline is identified as one of the top advertisers on Fox News.",
+            "citations": [
+                32
+            ]
+        },
+        {
+            "relationship": "Corporate advertiser",
+            "entity": "Liberty Mutual",
+            "summary": "Liberty Mutual is listed among the leading brands that purchase advertising space on Fox News.",
+            "citations": [
+                32
+            ]
+        },
+        {
+            "relationship": "Controlling entity",
+            "entity": "Murdoch Family Trust",
+            "summary": "The Murdoch family maintains control of Fox Corporation through a family trust, which holds a significant percentage of voting shares.",
+            "citations": [
+                2,
+                7,
+                10
+            ]
+        },
+        {
+            "relationship": "Institutional shareholder",
+            "entity": "State Street Corporation",
+            "summary": "State Street Corporation and its subsidiaries, such as SSgA Funds Management, are among the largest institutional owners of Fox Corporation.",
+            "citations": [
+                39,
+                42,
+                43,
+                44
+            ]
+        },
+        {
+            "relationship": "Institutional shareholder",
+            "entity": "The Vanguard Group",
+            "summary": "The Vanguard Group is a major institutional shareholder of both Class A and Class B Fox Corporation stock.",
+            "citations": [
+                41,
+                42,
+                43,
+                44
+            ]
+        },
+        {
+            "relationship": "Advertising partners",
+            "entity": "Various Corporate Advertisers",
+            "summary": "Fox News receives funding from a wide range of sponsors, including major brands like General Motors, P&G, and various smaller up-and-coming entrepreneurs.",
+            "citations": [
+                27,
+                28,
+                30,
+                31,
+                33,
+                34,
+                35,
+                36
+            ]
+        }
+    ],
+    "sources": {
+        "1": {
+            "title": "Rupert Murdoch",
+            "url": "https://en.wikipedia.org/wiki/Rupert_Murdoch",
+            "summary": "Rupert Murdoch \u00b7 Chairman and CEO of News Corporation (1980\u20132013) \u00b7 Executive chairman of News Corp (2013\u20132023) \u00b7 Chairman and CEO of 21st Century Fox (2013\u20132015) ..."
+        },
+        "2": {
+            "title": "Fox Corporation",
+            "url": "https://en.wikipedia.org/wiki/Fox_Corporation",
+            "summary": "The company is controlled by Lachlan Murdoch through a family trust with 36% voting shares. Rupert Murdoch is chairman emeritus ..."
+        },
+        "3": {
+            "title": "Rupert Murdoch - foxcorporation",
+            "url": "https://www.foxcorporation.com/rupert-murdoch-chairman-emeritus/",
+            "summary": "Murdoch currently serves as Chairman Emeritus of both Fox Corporation and News Corp., two of the most recognized and influential media companies in the world."
+        },
+        "4": {
+            "title": "Who Owns Fox - Free Press",
+            "url": "https://www.freepress.net/who-owns-media/broadcasting-entertainment/who-owns-media-fox",
+            "summary": "Capitulation Rank: Obeying Category: Broadcasting & Entertainment Market Cap: $24.16 billion. Chairman & CEO Lachlan Murdoch. Fox News is synonymous with ..."
+        },
+        "5": {
+            "title": "Which Company Owns Fox News?",
+            "url": "https://www.fool.com/investing/how-to-invest/stocks/who-owns-fox-news/",
+            "summary": "Fox News, a leading U.S. news channel, is owned by Fox, controlled by the Murdoch family. Investors can't buy Fox News directly but can purchase ..."
+        },
+        "6": {
+            "title": "Fox News",
+            "url": "https://en.wikipedia.org/wiki/Fox_News",
+            "summary": "Owned by the Fox News Media subsidiary of Fox Corporation, it is the most-watched cable news network in the United States, and as of 2023 it generates ..."
+        },
+        "7": {
+            "title": "Lachlan Murdoch cements control of Fox and WSJ media ...",
+            "url": "https://www.nbcnews.com/business/media/lachlan-murdoch-cements-control-fox-wsj-media-empire-new-family-deal-rcna229946",
+            "summary": "... Fox News parent Fox and Wall Street Journal owner News Corp. Under the original trust, News Corp and Fox voting shares would have been ..."
+        },
+        "8": {
+            "title": "Rupert Murdoch announces transition to new role of ...",
+            "url": "https://www.foxnews.com/media/rupert-murdoch-announces-transition-new-role-chairman-emeritus-fox-news-corp",
+            "summary": "Rupert Murdoch transitions to Chairman Emeritus of FOX Corporation and News Corp. Lachlan Murdoch will become the sole chair of both companies ..."
+        },
+        "9": {
+            "title": "Board of Directors",
+            "url": "https://www.foxcorporation.com/management/board-of-directors/",
+            "summary": "Lachlan Murdoch is the Executive Chair and Chief Executive Officer of Fox Corporation, which is among the most recognized and influential media companies in ..."
+        },
+        "10": {
+            "title": "Murdoch family retains majority control of News Corp after ...",
+            "url": "https://www.theguardian.com/media/2024/nov/20/rupert-murdoch-family-news-corp",
+            "summary": "The Murdoch family controls 41% of company votes, despite having a 14% stake in the company. The family shares are currently held in a trust ..."
+        },
+        "11": {
+            "title": "Executive Team",
+            "url": "https://www.foxcorporation.com/management/business-unit-leaders/",
+            "summary": "Executive Team \u00b7 Jack Abernethy. Chief Executive Officer. FOX Television Stations \u00b7 Paul Cheesbrough. Chief Executive Officer. Tubi Media Group \u00b7 Suzanne Scott."
+        },
+        "12": {
+            "title": "Fox News: Media Relations",
+            "url": "https://press.foxnews.com/",
+            "summary": "Executive Leadership \u00b7 Megan Albano. Executive Vice President, Morning Programming & Program Development \u00b7 Sharri Berg. President, FOX Weather \u00b7 Porter Berry."
+        },
+        "13": {
+            "title": "Executive Team",
+            "url": "https://www.foxcorporation.com/management/executive-team/",
+            "summary": "Lachlan Murdoch is the Executive Chair and Chief Executive Officer of Fox Corporation, which is among the most recognized and influential media companies in ..."
+        },
+        "14": {
+            "title": "fox news media announces executive promotions",
+            "url": "https://press.foxnews.com/2026/01/fox-news-media-announces-executive-promotions-2",
+            "summary": "Tommy Firth will take on the new role of Executive Vice President of FOX News Digital's editorial team while Beth Saunders was promoted to ..."
+        },
+        "15": {
+            "title": "Fox News Network Management Team | Org Chart",
+            "url": "https://rocketreach.co/fox-news-network-management_b5c499fef7be30e0",
+            "summary": "Fox News Network employs 2,127 employees. The Fox News Network management team includes Mary Wells (Chief Executive Officer), Nicolle Campa (Senior Vice ..."
+        },
+        "16": {
+            "title": "JAY WALLACE | Media Relations",
+            "url": "https://press.foxnews.com/jay-wallace",
+            "summary": "Jay Wallace joined FOX News Channel (FNC) at its inception in 1996 and currently serves as the President and Executive Editor of FOX News Media."
+        },
+        "17": {
+            "title": "SUZANNE SCOTT | Media Relations",
+            "url": "https://press.foxnews.com/suzanne-scott",
+            "summary": "Suzanne Scott currently serves as the Chief Executive Officer (CEO) of FOX News Media, which encompasses the two linear networks FOX News Channel (FNC) and FOX ..."
+        },
+        "18": {
+            "title": "Fox News Website Bias and Reliability",
+            "url": "https://adfontesmedia.com/fox-news-bias-and-reliability/",
+            "summary": "Ad Fontes Media rates Fox News (website) in the Skews Right category of bias and as Generally Reliable/Analysis OR Other Issues in terms of reliability."
+        },
+        "19": {
+            "title": "The Fox News Effect: Media Bias and Voting",
+            "url": "https://eml.berkeley.edu/~sdellavi/wp/FoxVoteQJEAug07.pdf",
+            "summary": "The more inclusive audience estimates imply that Fox News convinced between 3 and 8 percent of its non-Republican viewers to vote. Republican, depending on the ..."
+        },
+        "20": {
+            "title": "The Fox News Effect: Media Bias and Voting",
+            "url": "https://econ.umd.edu/publication/fox-news-effect-media-bias-and-voting",
+            "summary": "Between October 1996 and November 2000, the conservative Fox News Channel was introduced in the cable programming of 20 percent of U. S. towns. Fox News ..."
+        },
+        "21": {
+            "title": "Rating the Bias of CNN, Fox News, The Messenger ...",
+            "url": "https://www.allsides.com/blind-survey/rating-bias-cnn-fox-news-messenger-newsnation-and-straight-arrow-news-june-2023",
+            "summary": "Fox News' bias was rated Right (+3.10). This confirmed the results of the February 2023 Blind Bias Survey in which respondents rated Fox News as Right, though ..."
+        },
+        "22": {
+            "title": "The Partisan Delivery of News - A Content Analysis of CNN ...",
+            "url": "https://scholarsarchive.jwu.edu/cgi/viewcontent.cgi?article=1036&context=student_scholarship",
+            "summary": "Fox News' 6pm show was more conservative leaning so it was scored a 7. The 9pm show was again very conservative and received 10's in all categories. It is clear ..."
+        },
+        "23": {
+            "title": "Bias in Cable News: Persuasion and Polarization",
+            "url": "https://www.aeaweb.org/articles?id=10.1257/aer.20160812",
+            "summary": "We estimate that Fox News increases Republican vote shares by 0.3 points among viewers induced into watching 2.5 additional minutes per week by variation in ..."
+        },
+        "24": {
+            "title": "Biasly ranks Fox News as \u201cvery conservative\u201d do you ...",
+            "url": "https://www.reddit.com/r/Askpolitics/comments/1l1lbyw/biasly_ranks_fox_news_as_very_conservative_do_you/",
+            "summary": "FOX is Centrist, with a slight bias to the Right. It host a wide range of views from Libertarian up to the left of Tucker Carlson. It is the ..."
+        },
+        "25": {
+            "title": "Fox News. An Analysis of the News Channel's Political Bias",
+            "url": "https://www.grin.com/document/1271744?srsltid=AfmBOopujpZZ7OqrWG1iG-eMrVZjJ8NpC6pjQ7V_0KNRlbOUnBJePXXl",
+            "summary": "Most of Fox's reporting is either one-sided or overrepresents the conservative position. When advocates of one side outnumber or eclipse the other, the ..."
+        },
+        "26": {
+            "title": "The top 10 worst examples of media malpractice in 2025",
+            "url": "https://www.foxnews.com/opinion/broadcast-bias-top-10-worst-examples-media-malpractice-2025",
+            "summary": "Broadcast networks dismissed by Americans in 2025, but emotional propaganda betrays journalism for political bias, in the top 10 examples of"
+        },
+        "27": {
+            "title": "Current Fox News Channel Sponsors to ... - WhoAdvertisesOn",
+            "url": "https://whoadvertiseson.org/foxaction/",
+            "summary": "Toolkit for tracking advertisers on partisan news channels with sampling, data science, and open data. Now tracking Fox News."
+        },
+        "28": {
+            "title": "FOX Advertising -",
+            "url": "https://www.foxadvertising.com/",
+            "summary": "FOX brings together the energy of live sports, the impact of trusted news, the storytelling of entertainment, and Tubi's streaming growth to help brands meet ..."
+        },
+        "29": {
+            "title": "BoycottFoxAdvertisers",
+            "url": "https://www.trueusa.org/boycott",
+            "summary": "Fox News gets about 65% of its revenue from cable providers. They've negotiated outrageous fees because of pressure from their rabid fans. So, every subscriber ..."
+        },
+        "30": {
+            "title": "Here's a list of Fox News advertisers. You know what to do, ...",
+            "url": "https://www.facebook.com/LincolnSquareHQ/posts/heres-a-list-of-fox-news-advertisers-you-know-what-to-do-america-tag-them-in-a-p/783963397860470/",
+            "summary": "You know what to do, America. Tag them in a post, email them, whatever you have to do."
+        },
+        "31": {
+            "title": "Advertisements",
+            "url": "https://www.foxnews.com/category/special/20th-anniversary/advertisements",
+            "summary": "Carl's Jr. brings back bikini model ads \u00b7 Carl's Jr. has brought back its \"iconic\" bikini-clad advertisements in its newest Super Bowl ad campaign."
+        },
+        "32": {
+            "title": "Is there a list of all Fox News's advertisers?",
+            "url": "https://www.quora.com/Is-there-a-list-of-all-Fox-Newss-advertisers",
+            "summary": "For starters: Top Fox New Advertisers: GlaxoSmithKline, Liberty Mutual, General Motors, Procter & Gamble, Intuit, NortonLifeLock, Nestle, Kraft ..."
+        },
+        "33": {
+            "title": "List of *TOP* fox news advertisers : r/weaponizedconsumers",
+            "url": "https://www.reddit.com/r/weaponizedconsumers/comments/7wfs3x/list_of_top_fox_news_advertisers/",
+            "summary": "List of *TOP* fox news advertisers \u00b7 @BeachesResorts \u00b7 @SIRIUSXM \u00b7 @CarfaxReports \u00b7 @AceHardware \u00b7 @IAC \u00b7 @Cabelas \u00b7 @JohnDeere. --David Hogg @ ..."
+        },
+        "34": {
+            "title": "Nineteen New Companies Pledge Not to Run Additional ...",
+            "url": "https://colorofchange.org/blog/internal_press/nineteen-new-companies-pledge-not-to-run-additiona/",
+            "summary": "\u201cMetropolitan Talent Management is 100% dedicated to not buy advertising on any part of Fox News.\u201d \u201cWe learned of this yesterday and have taken action to ..."
+        },
+        "35": {
+            "title": "Fox News",
+            "url": "https://comcastadvertising.com/networks/fox-news/",
+            "summary": "Planning to advertise on Fox News? Comcast Advertising provides targeted, local TV & Digital Network Advertising."
+        },
+        "36": {
+            "title": "Small Sponsors Gain Bigger Voice at Fox News",
+            "url": "https://variety.com/2025/tv/news/fox-news-channel-small-advertisers-commercials-1236533598/",
+            "summary": "Smaller advertisers are playing a bigger role at Fox News Channel, which cultivates relationships with up and coming entrepreneurs."
+        },
+        "37": {
+            "title": "Fox Corporation (FOX) Stock Major Holders",
+            "url": "https://finance.yahoo.com/quote/FOX/holders/",
+            "summary": "Find out the direct holders, institutional holders and mutual fund holders for Fox Corporation (FOX)."
+        },
+        "38": {
+            "title": "Fox Corporation Class B Common Stock (FOX) Institutional ...",
+            "url": "https://www.nasdaq.com/market-activity/stocks/fox/institutional-holdings",
+            "summary": "Find the latest institutional holdings data for Fox Corporation Class B Common Stock (FOX) including shareholders, ownership summaries, and holding activities"
+        },
+        "39": {
+            "title": "Company Fox Corporation - MarketScreener",
+            "url": "https://www.marketscreener.com/quote/stock/FOX-CORPORATION-57672112/company/",
+            "summary": "Shareholders: Fox Corporation ; STATE STREET CORPORATION. 8.988 %. 18,727,973 ; SSgA Funds Management, Inc. 7.861 %. 16,378,788 ; Dodge & Cox. 6.312 %. 13,151,969 ..."
+        },
+        "40": {
+            "title": "Board-Members-and-Top-Shareholders-for-Cable-and- ...",
+            "url": "https://mediaengagement.org/wp-content/uploads/2020/12/Board-Members-and-Top-Shareholders-for-Cable-and-Nightly-Network-News-Parent-Companies.pdf",
+            "summary": "This document outlines the board members and top shareholders of the parent companies of ABC, CBS, CNN, FOX News, NBC and MSNBC. Below you will find information ..."
+        },
+        "41": {
+            "title": "Who owns Fox Corporation Class B? FOX Stock Ownership",
+            "url": "https://www.tipranks.com/stocks/fox/ownership",
+            "summary": "Top Shareholders ; Lachlan Murdoch. 86,626,693, Insider ; Lgc Holdco, Llc. 85,372,810, Insider ; Vanguard. 15,526,936, Institution ; Vanguard Index Funds."
+        },
+        "42": {
+            "title": "Who Owns Fox Corp B? FOX Shareholders",
+            "url": "https://www.investing.com/equities/fox-corp-b-ownership",
+            "summary": "Top Institutional Holders ; The Vanguard Group, Inc. 9.97%, 42,406,791 ; BlackRock, Inc. 7.73%, 32,898,925 ; State Street Global Advisors, Inc. 7.14%, 30,387,665 ..."
+        },
+        "43": {
+            "title": "Fox Corporation (FOXA) Stock Major Holders",
+            "url": "https://finance.yahoo.com/quote/FOXA/holders/",
+            "summary": "Top Institutional Holders ; Vanguard Group Inc, 24.44M \u00b7 Dec 31, 2025 ; Blackrock Inc. 19.8M \u00b7 Dec 31, 2025 ; State Street Corporation, 18.73M \u00b7 Sep 30, 2025 ; Dodge & ..."
+        },
+        "44": {
+            "title": "FOX - Fox Corporation Stock - Stock Price, Institutional ...",
+            "url": "https://fintel.io/so/us/fox",
+            "summary": "Largest shareholders include Vanguard Group Inc, State Street Corp, BlackRock, Inc., Goldman Sachs Group Inc, State Of Wisconsin Investment Board, Dodge & Cox, ..."
+        },
+        "45": {
+            "title": "How Fox's corporate structure creates the conditions that ...",
+            "url": "https://medium.com/@c.e.hirschauer/how-foxs-corporate-structure-creates-the-conditions-that-allow-for-large-scale-gaslighting-and-7039dbacf64b",
+            "summary": "Fox's corporate architecture \u2014 separate but branded broadcast and cable divisions, owned local stations, and rich syndication/ digital pipelines"
+        },
+        "46": {
+            "title": "Who Owns Fox News Company? Unveiling the Corporate ...",
+            "url": "https://explore.st-aug.edu/exp/who-owns-fox-news-company-unveiling-the-corporate-heartbeat-behind-americas-most-influential-news-network",
+            "summary": "Ownership Structure: Beyond Simple Control \u00b7 Majority stake: News Corp holds approximately 80% of Fox Corporation's shares. \u00b7 Publicly traded: Fox ..."
+        },
+        "47": {
+            "title": "Fox News Media Org Chart + Executive Team",
+            "url": "https://www.theofficialboard.com/org-chart/fox-news-media",
+            "summary": "foxnews.com has 50 executives and 3 subsidiaries. CEO Suzanne Scott Fox News. CFO & COO Joseph Dorrego Move"
+        },
+        "48": {
+            "title": "fox-20220630",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828022022584/fox-20220630.htm",
+            "summary": "Fox Corporation is a news, sports and entertainment company, which manages and reports its businesses in the following segments: \u2022Cable Network Programming ..."
+        }
+    }
+}
