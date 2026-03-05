@@ -1,81 +1,82 @@
-#serp.py
+# serp.py
 from dotenv import load_dotenv
 import os
-import requests
+import aiohttp
 from urllib.parse import urlparse
 
 load_dotenv()
 
 serp_api_key = os.getenv("SERP_API_KEY")
 
-def generate_query(entity):
-    """Defines query parameters for our Gooogle search"""
-    #TO-DO: customize query based on if entity is org or person
-   
+
+def generate_query(entity, role=None):
+    context = f"{entity} {role}" if role else entity
+
     queries = [
-        f"{entity} ownership",
-        f"{entity} executives",
-        f"{entity} political bias",
-        f"{entity} advertisers",
-        f"{entity} shareholders",
-        f"{entity} leadership",
-        f"{entity} corporate structure"
+        f"{context} ownership",
+        f"{context} executives",
+        f"{context} political bias",
+        f"{context} advertisers",
+        f"{context} shareholders",
+        f"{context} leadership",
+        f"{context} corporate structure"
     ]
-    
+
     return queries
 
-def serp_search(entity: str, num_results: int = 10):
-    """
-    Run multiple SERP queries and merge + deduplicates + filter results.
-    Returns a list of {title, url, snippet}.
-    """
-    queries = generate_query(entity)
-    merged = []
 
-    for q in queries:
+async def serp_search(entity: str, role: str = None, num_results: int = 5):
+    """
+    Run multiple SERP queries concurrently, merge, deduplicate, and return results.
+    Returns a list of {title, url, snippet, domain}.
+    """
+    queries = generate_query(entity, role)
 
+    async def fetch_query(session, q):
+        params = {
+            "engine": "google",
+            "q": q,
+            "api_key": serp_api_key,
+            "num": num_results,
+        }
         try:
-
-            params = {
-                "engine": "google",
-                "q": q,
-                "api_key": serp_api_key,
-                "num": num_results,
-            }
-
-            resp = requests.get("https://serpapi.com/search", params=params, timeout= 30)
-            resp.raise_for_status()
-            data = resp.json()
-
-        except requests.exceptions.RequestException as e:
+            async with session.get("https://serpapi.com/search", params=params, timeout=aiohttp.ClientTimeout(total=30)) as resp:
+                resp.raise_for_status()
+                data = await resp.json()
+                results = []
+                for item in data.get("organic_results", []):
+                    url = item.get("link", "")
+                    domain = urlparse(url).netloc.replace("www.", "")
+                    results.append({
+                        "title": item.get("title", ""),
+                        "url": url,
+                        "snippet": item.get("snippet", ""),
+                        "domain": domain,
+                    })
+                return results
+        except Exception as e:
             print(f"SERP API error for query '{q}': {e}")
-            continue 
+            return []
 
-        for item in data.get("organic_results", []):
-            url = item.get("link", "")
-            domain = urlparse(url).netloc.replace("www.", "")
+    async with aiohttp.ClientSession() as session:
+        import asyncio
+        all_results = await asyncio.gather(*[fetch_query(session, q) for q in queries])
 
-            merged.append({
-                "title": item.get("title", ""),
-                "url": url,
-                "snippet": item.get("snippet", ""),
-                "domain": domain,
-            })
+    # flatten
+    merged = [item for sublist in all_results for item in sublist]
 
-    # Deduplicate by URL
+    # deduplicate by URL
     deduped = []
     seen = set()
-
     for r in merged:
         if r["url"] and r["url"] not in seen:
             seen.add(r["url"])
             deduped.append(r)
 
-
     return deduped
 
 
-def build_serp_context(results):
+def build_serp_context(results, max_results: int = 30):
     lines = []
     for i, r in enumerate(results, start=1):
         lines.append(

@@ -1,15 +1,33 @@
-#context.py
-from validate import load_and_validate
+# context.py
 from dotenv import load_dotenv
 import os
 from google import genai
-from serp import build_serp_context, serp_search
-import json
+from .serp import build_serp_context, serp_search
+from pydantic import BaseModel
+from typing import Literal
+
+class Affiliation(BaseModel):
+    relationship: str
+    entity: str
+    summary: str
+    severity: Literal["direct", "indirect", "past"]
+    citations: list[str]
+
+class Source(BaseModel):
+    title: str
+    url: str
+    summary: str
+
+class AffiliationResult(BaseModel):
+    personal_affiliations: list[Affiliation]
+    political_affiliations: list[Affiliation]
+    financial_affiliations: list[Affiliation]
+    sources: dict[str, Source]
 
 load_dotenv()
-
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=gemini_api_key)
+
 
 def build_prompt(entity_name, serp_context):
     return f"""
@@ -50,18 +68,32 @@ def build_prompt(entity_name, serp_context):
         - Do NOT skip or reorder citation numbers.
         - Do NOT create new citation numbers.
         - Every citation used MUST correspond to an existing source key.
-        - Every source key MUST be used at least once.
+        - Only include sources that were actually cited in at least one affiliation.
         - If a source URL is truncated (contains "..."), you MUST still include it exactly as given.
 
         ============================================================
         AFFILIATION CATEGORIES
         ============================================================
 
+        For each category, focus on relationships that answer these core questions:
+        - Who funds or financially benefits from the entity?
+        - Who controls or governs the entity?
+        - What political or industry interests shape the entity's positions or output?
+        - Who does the entity answer to, report to, or depend on?
+
+        Affiliations must describe relationships where external parties have influence OVER the entity.
+        Do NOT extract relationships where the entity has influence over others.
+        Do NOT extract members, subscribers, or components that belong TO the entity.
+
+        Example of what NOT to extract: "0xSenses Corporation is a member of IEEE" — this is IEEE having members, not IEEE being affiliated with something.
+        Example of what TO extract: "IEEE receives funding from defense contractors" — this is an external party influencing IEEE.
         Extract affiliations in THREE categories:
 
         1. personal_affiliations:
         - employment, education, memberships, roles, leadership positions
         - associations with people or organizations
+        - Do NOT extract audience statistics, viewership numbers, or demographic reach as affiliations.
+        - Affiliations MUST describe a relationship between the entity and an organization, person, or movement.
 
         2. political_affiliations:
         - political party, ideological alignment, editorial stance
@@ -70,6 +102,7 @@ def build_prompt(entity_name, serp_context):
         3. financial_affiliations:
         - ownership, parent company, subsidiaries
         - donors, funding sources, advertisers, institutional shareholders
+        - Do NOT extract $0 values or absence of activity as affiliations.
 
         ============================================================
         EXTRACTION RULES
@@ -89,8 +122,18 @@ def build_prompt(entity_name, serp_context):
             "relationship": "",
             "entity": "",
             "summary": "",
+            "severity": "",
             "citations": []
         }}
+
+        ============================================================
+        SEVERITY RULES:
+        ============================================================
+        
+        - "severity" MUST be exactly one of: "direct", "indirect", or "past"
+        - "direct"   → current, active, and explicit (e.g. employed by, funded by, owns)
+        - "indirect" → associated or influential but not formal (e.g. frequently cited by, aligned with)
+        - "past"     → former relationship, no longer active
 
         ============================================================
         SORTING RULES
@@ -131,21 +174,32 @@ def build_prompt(entity_name, serp_context):
         {serp_context}
         """
 
-def extract_affiliations(entity):
-    serp_results = serp_search(entity)
+
+async def extract_affiliations(entity, role=None) -> AffiliationResult:
+    print("Starting SERP search...")
+    serp_results = await serp_search(entity, role)
+    print(f"SERP done. {len(serp_results)} results.")
     serp_context = build_serp_context(serp_results)
+    print(f"Context built. Sending to Gemini...")
     prompt = build_prompt(entity, serp_context)
 
     response = client.models.generate_content(
-        model="gemini-3-flash-preview",
-        contents=prompt
+        model="gemini-2.5-flash",
+        contents=prompt,
+        config={
+            "response_mime_type": "application/json",
+            "response_json_schema": AffiliationResult.model_json_schema(),
+            "temperature": 0
+        }
     )
 
-    return response.text
+    print("Gemini responded.")
+    return AffiliationResult.model_validate_json(response.text)
+
 
 if __name__ == "__main__":
-    entity = "Fox News"
-    raw_output = extract_affiliations(entity)
-    data = json.dumps(load_and_validate(raw_output))
-
-    print(data)
+    import asyncio
+    async def main():
+        result = await extract_affiliations("CNN")
+        print(result.model_dump_json(indent=2))
+    asyncio.run(main())
